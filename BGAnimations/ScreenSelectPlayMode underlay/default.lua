@@ -12,12 +12,7 @@ local choices = {
 	{
 		Value = "ECFA",
 		Text = ScreenString("ECFA"),
-		ZoomWidth = 0.45
-	},
-	{
-		Value = "StomperZ",
-		Text = ScreenString("StomperZ"),
-		ZoomWidth = 0.65
+		ZoomWidth = 0.62
 	}
 }
 
@@ -119,10 +114,6 @@ local t = Def.ActorFrame{
 		Def.Quad{
 			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(20) end,
 			OffCommand=function(self) self:sleep(0.2):linear(0.1):diffusealpha(0) end
-		},
-		Def.Quad{
-			InitCommand=function(self) self:diffuse(0.2,0.2,0.2,1):zoomto(90,38):y(60) end,
-			OffCommand=function(self) self:sleep(0.1):linear(0.1):diffusealpha(0) end
 		},
 	},
 
