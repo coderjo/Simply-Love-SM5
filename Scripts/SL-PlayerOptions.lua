@@ -113,10 +113,10 @@ local Overrides = {
 			-- Allow users to artbitrarily add new judgment graphics to /Graphics/_judgments/
 			-- without needing to modify this script;
 			-- instead of hardcoding a list of judgment fonts, get directory listing via FILEMAN.
-			local path = THEME:GetPathG("","_judgments/Competitive")
+			local path = THEME:GetPathG("","_judgments/" .. SL.Global.GameMode )
 
-			if SL.Global.GameMode == "StomperZ" or SL.Global.GameMode == "ECFA" then
-				path = THEME:GetPathG("", "_judgments/StomperZ")
+			if SL.Global.GameMode == "Casual" then
+				path = THEME:GetPathG("", "_judgments/Competitive")
 			end
 
 			local files = FILEMAN:GetDirListing(path .. "/")
@@ -198,7 +198,7 @@ local Overrides = {
 		Choices = function()
 			local first	= 0.05
 			local last 	= 2
-			local step 	= 0.05
+			local step 	= 0.01
 
 			return stringify( range(first, last, step), "%g")
 		end,
