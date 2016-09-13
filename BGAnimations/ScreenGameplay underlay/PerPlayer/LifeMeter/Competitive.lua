@@ -29,6 +29,16 @@ local meter = Def.ActorFrame{
 
 	-- // start meter proper //
 	Def.Quad{
+		Name="MeterFillBG";
+		InitCommand=cmd(zoomto,meterFillLength,meterFillHeight; diffuse,Color.Black; horizalign, left; rotationz, 270;),
+		OnCommand=function(self)
+			self:diffusealpha(0.7)
+			self:x(meterXOffset)
+			self:y(meterFillLength/2)
+		end
+	},
+
+	Def.Quad{
 		Name="MeterFill";
 		InitCommand=cmd(zoomto,0,meterFillHeight; diffuse,PlayerColor(player); horizalign, left; rotationz, 270;),
 		OnCommand=cmd(x, meterXOffset; y, meterFillLength/2),
