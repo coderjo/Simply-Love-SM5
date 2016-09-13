@@ -1,11 +1,11 @@
 local player = ...
 
-local meterFillLength = 136
-local meterFillHeight = 18
-local meterXOffset = _screen.cx - WideScale(238, 288)
+local meterFillLength = 280
+local meterFillHeight = 25
+local meterXOffset = _screen.cx - WideScale(238, 288) - 100
 
 if player == PLAYER_2 then
-	meterXOffset = _screen.cx + WideScale(238, 288)
+	meterXOffset = _screen.cx + WideScale(238, 288) + 100
 end
 
 local newBPS, oldBPS
@@ -18,10 +18,10 @@ local meter = Def.ActorFrame{
 			self:visible(false)
 		end
 	end,
-	OnCommand=cmd(y, 20),
+	OnCommand=cmd(y, 280),
 
 	-- frame
-	Border(meterFillLength+4, meterFillHeight+4, 2)..{
+	Border(meterFillHeight+4, meterFillLength+4, 2)..{
 		OnCommand=function(self)
 			self:x(meterXOffset)
 		end
@@ -30,14 +30,14 @@ local meter = Def.ActorFrame{
 	-- // start meter proper //
 	Def.Quad{
 		Name="MeterFill";
-		InitCommand=cmd(zoomto,0,meterFillHeight; diffuse,PlayerColor(player); horizalign, left),
-		OnCommand=cmd(x, meterXOffset - meterFillLength/2),
+		InitCommand=cmd(zoomto,0,meterFillHeight; diffuse,PlayerColor(player); horizalign, left; rotationz, 270;),
+		OnCommand=cmd(x, meterXOffset; y, meterFillLength/2),
 
 		-- check state of mind
 		HealthStateChangedMessageCommand=function(self,params)
 			if(params.PlayerNumber == player) then
 				if(params.HealthState == 'HealthState_Hot') then
-					self:diffuse(color("1,1,1,1"))
+					--self:diffuse(color("1,1,1,1"))
 				else
 					self:diffuse(PlayerColor(player))
 				end
@@ -57,16 +57,17 @@ local meter = Def.ActorFrame{
 
 	LoadActor("swoosh.png")..{
 		Name="MeterSwoosh",
-		InitCommand=cmd(zoomto,meterFillLength,meterFillHeight; diffusealpha,0.2; horizalign, left; ),
+		InitCommand=cmd(zoomto,meterFillLength,meterFillHeight; diffusealpha,0.5; horizalign, left; rotationz, 270),
 		OnCommand=function(self)
-			self:x(meterXOffset - meterFillLength/2);
+			self:x(meterXOffset);
+			self:y(meterFillLength/2)
 			self:customtexturerect(0,0,1,1);
 			--texcoordvelocity is handled by the Update function below
 		end,
 		HealthStateChangedMessageCommand=function(self,params)
 			if(params.PlayerNumber == player) then
 				if(params.HealthState == 'HealthState_Hot') then
-					self:diffusealpha(1)
+					self:diffusealpha(0.8)
 				else
 					self:diffusealpha(0.2)
 				end
