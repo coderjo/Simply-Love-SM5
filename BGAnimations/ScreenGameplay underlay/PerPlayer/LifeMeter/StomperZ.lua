@@ -1,136 +1,106 @@
 local player = ...
-local p = ToEnumShortString(player)
-local x = GetNotefieldX( player )
-local under, over, full
 
-local af = Def.ActorFrame{
-	Name="LifeMeter_"..p,
-	InitCommand=function(self)
-		self:xy(x,0)
-	end,
-	OnCommand=function(self)
-		-- ECFA starts with the LifeMeter at half (ie, NotHot)
-		if SL.Global.GameMode == "ECFA" then
-			full:playcommand("NotHot")
+local meterFillLength = 280
+local meterFillHeight = 25
+local meterXOffset = _screen.cx - WideScale(238, 288) - 100
+
+if player == PLAYER_2 then
+	meterXOffset = _screen.cx + WideScale(238, 288) + 100
+end
+
+local newBPS, oldBPS
+
+local meter = Def.ActorFrame{
+
+	InitCommand=cmd(horizalign, left),
+	BeginCommand=function(self)
+		if SL[ToEnumShortString(player)].ActiveModifiers.HideLifebar then
+			self:visible(false)
 		end
 	end,
-	HealthStateChangedMessageCommand=function(self,params)
-		if(params.PlayerNumber == player) then
-			if(params.HealthState == 'HealthState_Hot') then
-				full:queuecommand("Hot")
-			elseif params.HealthState == "HealthState_Dead" then
-				full:queuecommand("Dead")
-			else
-				full:queuecommand("NotHot")
+	OnCommand=cmd(y, 280),
+
+	-- frame
+	Border(meterFillHeight+4, meterFillLength+4, 2)..{
+		OnCommand=function(self)
+			self:x(meterXOffset)
+		end
+	},
+
+	-- // start meter proper //
+	Def.Quad{
+		Name="MeterFill";
+		InitCommand=cmd(zoomto,0,meterFillHeight; diffuse,PlayerColor(player); horizalign, left; rotationz, 270;),
+		OnCommand=cmd(x, meterXOffset; y, meterFillLength/2),
+
+		-- check state of mind
+		HealthStateChangedMessageCommand=function(self,params)
+			if(params.PlayerNumber == player) then
+				if(params.HealthState == 'HealthState_Hot') then
+					--self:diffuse(color("1,1,1,1"))
+				else
+					self:diffuse(PlayerColor(player))
+				end
+			end
+		end,
+
+		-- check life (LifeMeterBar)
+		LifeChangedMessageCommand=function(self,params)
+			if(params.Player == player) then
+				local life = params.LifeMeter:GetLife() * (meterFillLength)
+				self:finishtweening()
+				self:bouncebegin(0.1)
+				self:zoomx( life )
+			end
+		end,
+	},
+
+	LoadActor("swoosh.png")..{
+		Name="MeterSwoosh",
+		InitCommand=cmd(zoomto,meterFillLength,meterFillHeight; diffusealpha,0.5; horizalign, left; rotationz, 270),
+		OnCommand=function(self)
+			self:x(meterXOffset);
+			self:y(meterFillLength/2)
+			self:customtexturerect(0,0,1,1);
+			--texcoordvelocity is handled by the Update function below
+		end,
+		HealthStateChangedMessageCommand=function(self,params)
+			if(params.PlayerNumber == player) then
+				if(params.HealthState == 'HealthState_Hot') then
+					self:diffusealpha(0.8)
+				else
+					self:diffusealpha(0.2)
+				end
+			end
+		end,
+		LifeChangedMessageCommand=function(self,params)
+			if(params.Player == player) then
+				local life = params.LifeMeter:GetLife() * (meterFillLength)
+				self:finishtweening()
+				self:bouncebegin(0.1)
+				self:zoomto( life, meterFillHeight )
 			end
 		end
-	end,
-	LifeChangedMessageCommand=function(self,params)
-		if(params.Player == player) then
-			local life = params.LifeMeter:GetLife()
-
-			if life >= 0.5 then
-				over:playcommand("ChangeSize", {CropAmount=scale(life, 0.5,1,  1,0) })
-				under:playcommand("ChangeSize", {CropAmount=0 })
-			else
-				over:playcommand("ChangeSize", {CropAmount=1 })
-				under:playcommand("ChangeSize", {CropAmount=scale(life, 0,0.5,  1,0) })
-			end
-		end
-	end,
-
-
-	Def.ActorFrame{
-		Name="Under",
-		InitCommand=function(self) under = self end,
-
-		Def.Quad{
-			Name="Left",
-			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
-					:diffuseupperleft(color("#c2c000")):diffuselowerleft(color("#c20200"))
-			end,
-			ChangeSizeCommand=function(self, params)
-				self:finishtweening():decelerate(0.2):croptop(params.CropAmount)
-			end
-		},
-		Def.Quad{
-			Name="Right",
-			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
-					:diffuseupperright(color("#c2c000")):diffuselowerright(color("#c20200"))
-			end,
-			ChangeSizeCommand=function(self, params)
-				self:finishtweening():decelerate(0.2):croptop(params.CropAmount)
-			end
-		}
-	},
-
-	Def.ActorFrame{
-		Name="Over",
-		InitCommand=function(self) over = self end,
-
-		Def.Quad{
-			Name="Left",
-			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
-					:diffuseupperleft(color("#006dc7")):diffuselowerleft(color("#00c263"))
-			end,
-			ChangeSizeCommand=function(self, params)
-				self:finishtweening():decelerate(0.2):croptop(params.CropAmount)
-			end
-		},
-		Def.Quad{
-			Name="Right",
-			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
-					:diffuseupperright(color("#006dc7")):diffuselowerright(color("#00c263"))
-			end,
-			ChangeSizeCommand=function(self, params)
-				self:finishtweening():decelerate(0.2):croptop(params.CropAmount)
-			end
-		}
-	},
-	Def.ActorFrame{
-		Name="Full",
-		InitCommand=function(self) full = self end,
-
-		Def.Quad{
-			Name="Left",
-			InitCommand=function(self)
-				self:horizalign(left):vertalign(top):xy( -GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuserightedge(0,0,0,1)
-					:diffuseupperleft(color("#6517e0")):diffuselowerleft(color("#6517e0"))
-			end,
-			HotCommand=function(self, params)
-				self:decelerate(1):diffusealpha(1)
-			end,
-			NotHotCommand=function(self)
-				self:diffusealpha(0)
-			end,
-			DeadCommand=function(self)
-				self:diffuseupperleft(1,0,0,0):diffuselowerleft(1,0,0,0)
-					:accelerate(0.2):diffusealpha(1):decelerate(0.4):diffusealpha(0)
-			end
-		},
-		Def.Quad{
-			Name="Right",
-			InitCommand=function(self)
-				self:horizalign(right):vertalign(top):xy( GetNotefieldWidth()/2, 40):zoomto( 50, _screen.h-40 ):diffuseleftedge(0,0,0,1)
-					:diffuseupperright(color("#6517e0")):diffuselowerright(color("#6517e0"))
-			end,
-			HotCommand=function(self, params)
-				self:decelerate(1):diffusealpha(1)
-			end,
-			NotHotCommand=function(self)
-				self:diffusealpha(0)
-			end,
-			DeadCommand=function(self)
-				self:diffuseupperright(1,0,0,0):diffuselowerright(1,0,0,0)
-					:accelerate(0.2):diffusealpha(1):decelerate(0.4):diffusealpha(0)
-			end
-		}
-	},
-
+	}
 }
 
-return af
+
+
+local function Update(self)
+
+	local swoosh = self:GetChild("MeterSwoosh")
+
+	newBPS = GAMESTATE:GetSongBPS()
+	local move = (newBPS*-1)/2
+	if GAMESTATE:GetSongFreeze() then move = 0 end
+	if swoosh then swoosh:texcoordvelocity(move,0) end
+
+	oldBPS = newBPS
+end
+
+meter.InitCommand=cmd(SetUpdateFunction,Update)
+
+return meter
+
+-- copyright 2008-2012 AJ Kelly/freem.
+-- do not use this code in your own themes without my permission.
