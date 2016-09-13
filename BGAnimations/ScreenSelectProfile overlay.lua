@@ -2,7 +2,7 @@ function GetLocalProfiles()
 	local t = {}
 
 	function GetSongsPlayedString(numSongs)
-		return numSongs == 1 and Screen.String("SingularSongPlayed") or Screen.String("SeveralSongsPlayed")
+		return numSongs == 1 and " Song Played" or " Songs Played"
 	end
 
 	for p = 0,PROFILEMAN:GetNumLocalProfiles()-1 do
@@ -16,7 +16,8 @@ function GetLocalProfiles()
 				InitCommand=cmd(y,8;zoom,0.5;vertspacing,-8;ztest,true),
 				BeginCommand=function(self)
 					local numSongsPlayed = profile:GetNumTotalSongsPlayed()
-					self:settext( string.format( GetSongsPlayedString( numSongsPlayed ), numSongsPlayed ) )
+					--self:settext( string.format( GetSongsPlayedString( numSongsPlayed ), numSongsPlayed ) )
+					self:settext( numSongsPlayed .. GetSongsPlayedString( numSongsPlayed ))
 				end
 			},
 		}

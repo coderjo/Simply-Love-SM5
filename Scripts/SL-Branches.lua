@@ -173,25 +173,28 @@ Branch.AfterProfileSave = function()
 			if SL.Global.Stages.Remaining <= 0 then
 
 				if SL.Global.ContinuesRemaining > 0 then
-
-					local CoinsNeeded = PREFSMAN:GetPreference("CoinsPerCredit")
-					local premium = PREFSMAN:GetPreference("Premium")
-
-					if premium == "Premium_DoubleFor1Credit" then
-						if SL.Global.Gamestate.Style == "versus" then
-							CoinsNeeded = CoinsNeeded * 2
-						end
-
-					elseif premium == "Premium_Off" then
-						if SL.Global.Gamestate.Style == "versus" or SL.Global.Gamestate.Style == "double" then
-							CoinsNeeded = CoinsNeeded * 2
-						end
-					end
-
-					if GAMESTATE:GetCoins() >= CoinsNeeded then
+					if GAMESTATE:GetCoinMode() == "CoinMode_Free" then
 						return "ScreenPlayAgain"
 					else
-						return Branch.AllowScreenEvalSummary()
+						local CoinsNeeded = PREFSMAN:GetPreference("CoinsPerCredit")
+						local premium = PREFSMAN:GetPreference("Premium")
+
+						if premium == "Premium_DoubleFor1Credit" then
+							if SL.Global.Gamestate.Style == "versus" then
+								CoinsNeeded = CoinsNeeded * 2
+							end
+
+						elseif premium == "Premium_Off" then
+							if SL.Global.Gamestate.Style == "versus" or SL.Global.Gamestate.Style == "double" then
+								CoinsNeeded = CoinsNeeded * 2
+							end
+						end
+
+						if GAMESTATE:GetCoins() >= CoinsNeeded then
+							return "ScreenPlayAgain"
+						else
+							return Branch.AllowScreenEvalSummary()
+						end
 					end
 				else
 					return Branch.AllowScreenEvalSummary()
@@ -222,7 +225,9 @@ Branch.AfterProfileSave = function()
 
 			if STATSMAN:GetCurStageStats():AllFailed() or GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() == 0 then
 				local credits = GetCredits()
-				if credits.Credits > 0 then
+				if GAMESTATE:GetCoinMode() == "CoinMode_Free" then
+					return "ScreenPlayAgain"
+				elseif credits.Credits > 0 then
 					return "ScreenPlayAgain"
 				else
 					return Branch.AllowScreenEvalSummary()

@@ -60,7 +60,7 @@ local SL_CustomPrefs =
 	},
 	VisualTheme =
 	{
-		Default = "Hearts",
+		Default = "Arrows",
 		Choices = { "Hearts", "Arrows" },
 	},
 	RainbowMode = {
@@ -74,7 +74,7 @@ local SL_CustomPrefs =
 	SimplyLoveColor =
 	{
 		-- a nice pinkish-purple, by default
-		Default = 3,
+		Default = 7,
 		Choices = { 1,2,3,4,5,6,7,8,9,10,11,12 },
 		Values = { 1,2,3,4,5,6,7,8,9,10,11,12 }
 	},
