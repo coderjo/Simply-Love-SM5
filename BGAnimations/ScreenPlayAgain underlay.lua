@@ -52,7 +52,10 @@ local function input(event)
 					end
 				end
 
-				GAMESTATE:InsertCoin(-coins)
+				if GAMESTATE:GetCoinMode() == "CoinMode_Pay" then
+					GAMESTATE:InsertCoin(-coins)
+				end
+				
 
 				SL.Global.Stages.Remaining = PREFSMAN:GetPreference("SongsPerPlay")
 				SL.Global.ContinuesRemaining = SL.Global.ContinuesRemaining - 1
