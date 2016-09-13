@@ -12,9 +12,9 @@ return Def.Actor{
 			p2_score:diffusealpha(1)
 		elseif dpP1 > dpP2 then
 			p1_score:diffusealpha(1)
-			p2_score:diffusealpha(0.65)
+			p2_score:diffusealpha(0.5)
 		elseif dpP2 > dpP1 then
-			p1_score:diffusealpha(0.65)
+			p1_score:diffusealpha(0.5)
 			p2_score:diffusealpha(1)
 		end
 	end
