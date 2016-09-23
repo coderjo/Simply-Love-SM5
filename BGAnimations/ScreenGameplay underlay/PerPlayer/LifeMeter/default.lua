@@ -1,5 +1,8 @@
 local player = ...
---Always use the competitive lifebar
-local lifemeter = LoadActor("Competitive.lua", player)
+
+if SL[ToEnumShortString(player)].ActiveModifiers.HideLifebar then return end
+
+local lifemeter_type = SL[ToEnumShortString(player)].ActiveModifiers.LifeMeterType or CustomOptionRow("LifeMeterType").Choices[1]
+	lifemeter_actor = LoadActor(lifemeter_type .. ".lua", player)
 	
-return lifemeter
+return lifemeter_actor

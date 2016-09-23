@@ -1,6 +1,9 @@
 Simply Love (StepMania 5)
 ======================
 
+![Arrow Logo](http://i.imgur.com/FyeguCQ.png)
+======================
+
 This is a recreation of hurtpiggypig's Simply Love SM3.95 theme made to now run in StepMania 5.
 
 I use the word "recreation" (as opposed to "port") because virtually no code was brought over from the SM3.95 counterpart.  My general process was to visually inspect the original SM3.95 theme, and recreate it screen by screen in SM5.
@@ -12,7 +15,7 @@ https://www.youtube.com/watch?v=OtcWy5m6-CQ
 
 Requirements:
 -------------
-You'll need to be running [StepMania 5.0.11](http://www.stepmania.com/download/) or newer to use this theme.  Older versions of StepMania are not compatible.
+You'll need to be running [StepMania 5.0.12](https://github.com/stepmania/stepmania/releases/tag/v5.0.12) to use this theme.  Older versions of StepMania are not compatible.
 
 If you are having trouble installing StepMania or getting it to run on your computer, please refer to StepMania's [FAQ](http://www.stepmania.com/faq/) and see [this issue on GitHub](https://github.com/stepmania/stepmania-site/issues/64).
 
