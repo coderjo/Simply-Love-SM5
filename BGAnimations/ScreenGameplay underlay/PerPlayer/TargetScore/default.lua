@@ -442,7 +442,17 @@ if (SL[ToEnumShortString(player)].ActiveModifiers.TargetStatus == "Target" or SL
 		end,
 		UpdateCommand=function(self)
 			local percentDifference = pss:GetPercentDancePoints() - (targetGradeScore * GetCurMaxPercentDancePoints())
+			
+			local textColor = color("#FFFFFFFF")
+			
+			if percentDifference > 0 then 
+				textColor = color("#00FF00FF")
+			elseif percentDifference < 0 then
+				textColor = color("#FF0000FF")
+			end
+
 			self:settext(string.format("%+2.2f", percentDifference * 100))
+			self:diffuse(textColor)
 		end
 	}
 end
