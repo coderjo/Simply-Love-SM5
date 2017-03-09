@@ -101,6 +101,7 @@ for player in ivalues(Players) do
 	lower[#lower+1] = LoadActor("./PerPlayer/Pane1", player)
 	lower[#lower+1] = LoadActor("./PerPlayer/Pane2", player)
 	lower[#lower+1] = LoadActor("./PerPlayer/Pane3", player)
+	lower[#lower+1] = LoadActor("./PerPlayer/Pane4", player)
 
 	t[#t+1] = lower
 end
