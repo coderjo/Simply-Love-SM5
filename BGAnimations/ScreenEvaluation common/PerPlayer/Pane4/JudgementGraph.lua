@@ -5,10 +5,6 @@ local storage = SL[ToEnumShortString(pn)].Stages.Stats[SL.Global.Stages.PlayedTh
 local GraphWidth = 300
 local GraphHeight = (140/2) - 6
 
-if GAMESTATE:GetCurrentStyle():GetStyleType() == "StyleType_OnePlayerTwoSides" then
-	GraphWidth = 520
-end
-
 local QuadHeight = {
 	W1 = 2,
 	W2 = 2,
