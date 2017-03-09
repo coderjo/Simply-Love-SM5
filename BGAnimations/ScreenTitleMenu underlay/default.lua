@@ -29,6 +29,11 @@ end
 -- - - - - - - - - - - - - - - - - - - - -
 
 local image = ThemePrefs.Get("VisualTheme")
+local defaultLogo = "Simply".. image .." (doubleres).png"
+
+local chillGrill = "ChillGrill (doubleres).png"
+local itgLogo = "InTheGroove (doubleres).png"
+local heatherCory = "HeatherCory (doubleres).png"
 
 return Def.ActorFrame{
 	InitCommand=function(self)
@@ -70,7 +75,7 @@ return Def.ActorFrame{
 		end
 	},
 
-	LoadActor("Simply".. image .." (doubleres).png") .. {
+	LoadActor(itgLogo) .. {
 		InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(1) end,
 		OffCommand=function(self) self:linear(0.5):shadowlength(0) end
 	}
