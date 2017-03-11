@@ -50,7 +50,11 @@ local ITGColors = {
 local TotalTaps = #storage.total_judgements
 local QuadWidth = GraphWidth / TotalTaps
 local QuadsPosition = GraphWidth / TotalTaps
-
+local largestOffset = 0
+for i=1,#storage.total_judgements do
+	local offset = math.abs(storage.total_judgements[i].TapNoteOffset * 1000)
+	if(offset > largestOffset) then largestOffset = offset end
+end
 
 
 local t = Def.ActorFrame{
@@ -77,7 +81,6 @@ local t = Def.ActorFrame{
 
 for i=1, #storage.total_judgements do 
 	local note = storage.total_judgements[i]
-
 	local tns = ToEnumShortString(note.TapNoteScore)
 	local hns = note.HoldNoteScore
 	local track = note.FirstTrack
@@ -91,10 +94,12 @@ for i=1, #storage.total_judgements do
 					self:y( (_screen.cy+80) - GraphHeight/2 )
 					self:addx(i * QuadsPosition)
 					
+					local offsetMS = offset * 1000;
+
 					if offset > 0 then
-						self:addy((GraphHeight/2) - (QuadY[tns] * (track + 1)))
+						self:addy((GraphHeight/2) - (QuadY[tns] - (offsetCap)))
 					elseif offset < 0 then
-						self:addy((GraphHeight/2) + (QuadY[tns] * (track + 1)))
+						self:addy((GraphHeight/2) + (QuadY[tns] + (offsetCap)))
 					end
 
 					self:diffuse(ITGColors[tns])
