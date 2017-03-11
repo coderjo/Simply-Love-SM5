@@ -60,6 +60,22 @@ end
 
 
 local t = Def.ActorFrame{
+	LoadFont("_wendy small")..{
+		InitCommand=cmd(zoom,0.15; horizalign, right; vertalign, bottom),
+		BeginCommand=function(self)
+			self:y(_screen.cy+80 - GraphHeight/2)
+			self:x(GraphWidth/2)
+			self:settext( string.format("+%5.2f ms", largestOffset * 1000) )
+		end
+	},
+	LoadFont("_wendy small")..{
+		InitCommand=cmd(zoom,0.15; horizalign, right; vertalign, top),
+		BeginCommand=function(self)
+			self:y(_screen.cy+80 + GraphHeight/2)
+			self:x(GraphWidth/2)
+			self:settext( string.format("-%5.2f ms", largestOffset * 1000) )
+		end
+	},
 	Def.Quad{
 		Name="Background",
 		InitCommand=function(self)
@@ -78,7 +94,7 @@ local t = Def.ActorFrame{
 			self:diffusealpha(0.7)
 			self:zoomto(GraphWidth, 1)
 		end
-	},
+	}
 };
 
 for i=1, #storage.total_judgements do 
