@@ -59,7 +59,7 @@ local meter = Def.ActorFrame{
 			if(params.Player == player) then
 				local life = params.LifeMeter:GetLife() * (meterFillLength)
 				self:finishtweening()
-				self:bouncebegin(0.1)
+				self:smooth(0.3)
 				self:zoomx( life )
 			end
 		end,
@@ -87,7 +87,7 @@ local meter = Def.ActorFrame{
 			if(params.Player == player) then
 				local life = params.LifeMeter:GetLife() * (meterFillLength)
 				self:finishtweening()
-				self:bouncebegin(0.1)
+				self:smooth(0.3)
 				self:zoomto( life, meterFillHeight )
 			end
 		end

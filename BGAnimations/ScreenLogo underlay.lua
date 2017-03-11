@@ -4,6 +4,10 @@ if game ~= "dance" and game ~= "pump" then
 	game = "techno"
 end
 
+local originalLogo = THEME:GetPathB("ScreenTitleMenu","underlay/Simply".. image .." (doubleres).png")
+local inTheGroove = THEME:GetPathB("ScreenTitleMenu","underlay/InTheGroove (doubleres).png")
+local chillGrill = THEME:GetPathB("ScreenTitleMenu","underlay/ChillGrill (doubleres).png")
+
 local t = Def.ActorFrame{
 	InitCommand=function(self)
 		self:y( image == "Hearts" and _screen.cy or _screen.cy+10 )		
@@ -18,7 +22,7 @@ local t = Def.ActorFrame{
 		end
 	},
 
-	LoadActor(THEME:GetPathB("ScreenTitleMenu","underlay/Simply".. image .." (doubleres).png"))..{
+	LoadActor(inTheGroove)..{
 		InitCommand=function(self)
 			self:x(_screen.cx+2):diffusealpha(0):zoom(0.7)
 				:shadowlength(1)

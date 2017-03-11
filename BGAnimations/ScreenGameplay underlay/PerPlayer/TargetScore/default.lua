@@ -439,19 +439,25 @@ if (SL[ToEnumShortString(player)].ActiveModifiers.TargetStatus == "Target" or SL
 			end
 
 			self:xy( noteX, 56 - graphY ):zoom(0.4)
+			self:diffuse(color("#ccccccFF"))
 		end,
 		UpdateCommand=function(self)
 			local percentDifference = pss:GetPercentDancePoints() - (targetGradeScore * GetCurMaxPercentDancePoints())
 			
-			local textColor = color("#FFFFFFFF")
-			
+			percentDifference = percentDifference * 100
+			--Round to nearest hundred
+			local roundDigits = 2
+			local shift = 10 ^ roundDigits
+			percentDifference = math.floor(percentDifference * shift + 0.5) / shift
+
+			local textColor = color("#ccccccFF")
 			if percentDifference > 0 then 
-				textColor = color("#00FF00FF")
+				textColor = color("#70f75bFF")
 			elseif percentDifference < 0 then
-				textColor = color("#FF0000FF")
+				textColor = color("#ef3939FF")
 			end
 
-			self:settext(string.format("%+2.2f", percentDifference * 100))
+			self:settext(string.format("%+2.2f", percentDifference))
 			self:diffuse(textColor)
 		end
 	}

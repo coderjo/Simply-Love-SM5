@@ -63,10 +63,6 @@ return Def.ActorFrame {
 			-- gold combo
 			kids.Number:playcommand("ChangeColor", {Color1="#FDFFC9", Color2="#FDDB85"})
 
-		elseif (SL.Global.GameMode ~= "ECFA" and param.FullComboW3) or (SL.Global.GameMode == "ECFA" and param.FullComboW4) then
-			-- green combo
-			kids.Number:playcommand("ChangeColor", {Color1="#C9FFC9", Color2="#94FEC1"})
-
 		elseif param.Combo then
 			-- normal (white) combo
 			kids.Number:stopeffect():diffuse( Color.White )
