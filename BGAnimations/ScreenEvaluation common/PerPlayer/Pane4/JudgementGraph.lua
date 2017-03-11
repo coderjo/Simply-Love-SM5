@@ -37,11 +37,11 @@ local TNSNames = {
 }
 
 local ITGColors = {
-	W1 = color("#21CCE8"),	-- blue
-	W2 = color("#e29c18"),	-- gold
-	W3 = color("#66c955"),	-- green
-	W4 = color("#9e00f7"),	-- purple
-	W5 = color("#ffa64d"),  -- orange
+	W1 = color("#00e6e6"),	-- blue
+	W2 = color("#ffd11a"),	-- gold
+	W3 = color("#00cc00"),	-- green
+	W4 = color("#cc0099"),	-- purple
+	W5 = color("#e65c00"),  -- orange
 	Miss =color("#ff0000")	-- red
 }
 
@@ -50,9 +50,11 @@ local ITGColors = {
 local TotalTaps = #storage.total_judgements
 local QuadWidth = GraphWidth / TotalTaps
 local QuadsPosition = GraphWidth / TotalTaps
+
+-- Calculate the largest offset in order to scale the graph
 local largestOffset = 0
 for i=1,#storage.total_judgements do
-	local offset = math.abs(storage.total_judgements[i].TapNoteOffset * 1000)
+	local offset = math.abs(storage.total_judgements[i].TapNoteOffset)
 	if(offset > largestOffset) then largestOffset = offset end
 end
 
@@ -73,7 +75,7 @@ local t = Def.ActorFrame{
 		InitCommand=function(self)
 			self:x( 0 )
 			self:y( _screen.cy+80 )
-			self:diffusealpha(0.4)
+			self:diffusealpha(0.7)
 			self:zoomto(GraphWidth, 1)
 		end
 	},
@@ -93,20 +95,17 @@ for i=1, #storage.total_judgements do
 					self:x(-GraphWidth/2)
 					self:y( (_screen.cy+80) - GraphHeight/2 )
 					self:addx(i * QuadsPosition)
-					
-					local offsetMS = offset * 1000;
 
-					if offset > 0 then
-						self:addy((GraphHeight/2) - (QuadY[tns] - (offsetCap)))
-					elseif offset < 0 then
-						self:addy((GraphHeight/2) + (QuadY[tns] + (offsetCap)))
-					end
+					-- set the height of the note on the graph as a percentage of the largest offset
+					local offsetPercent = offset / ( largestOffset / (GraphHeight/2) )
+
+					self:addy((GraphHeight/2) + offsetPercent)
 
 					self:diffuse(ITGColors[tns])
 
 					if tns == "Miss" then
 						self:y((_screen.cy+80) - GraphHeight/2):addy(QuadHeight["Miss"]/2):setsize(1,QuadHeight["Miss"])
-						self:diffusealpha(0.5)
+						self:diffusealpha(0.8)
 					end
 				end
 			}
