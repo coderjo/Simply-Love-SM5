@@ -7,7 +7,7 @@ local NumSongsInCourse = 8
 
 local t = Def.ActorFrame{
 	Name="StepsDisplayList",
-	InitCommand=cmd(vertalign, top; draworder, 2; xy, _screen.cx-170, _screen.cy + 70),
+	InitCommand=cmd(vertalign, top; draworder, 1; xy, _screen.cx-170, _screen.cy + 70),
 	-- - - - - - - - - - - - - -
 
 	OnCommand=cmd(queuecommand, "RedrawStepsDisplay"),
