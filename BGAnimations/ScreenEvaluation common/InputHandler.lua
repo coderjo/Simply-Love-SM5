@@ -1,7 +1,9 @@
-local af = ...
+local args = ...
+local af = args.af
+local num_panes = args.num_panes
+
 if not af then return end
 
-local num_panes = 4
 local panes, active_pane = {}, {}
 
 local style = ToEnumShortString(GAMESTATE:GetCurrentStyle():GetStyleType())
@@ -40,9 +42,9 @@ return function(event)
 				else
 					af:queuecommand("Shrink")
 				end
+
 				panes[pn][i]:visible(false)
 			end
-
 			panes[pn][active_pane[pn]+1]:visible(true)
 		end
 	end
