@@ -22,7 +22,7 @@ return Def.Actor{
 			SL.Global.ActiveModifiers.DecentsWayOffs = "Off"
 
 		elseif SL.Global.GameMode ~= "Casual" and SL.Global.PlayedThisGame == 0 then
-			SL.Global.ActiveModifiers.DecentsWayOffs = "On"
+			SL.Global.ActiveModifiers.DecentsWayOffs = "Decents Only"
 		end
 
 		for player in ivalues(Players) do
