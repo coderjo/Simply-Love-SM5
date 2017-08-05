@@ -10,9 +10,9 @@ end
 
 
 local FilterAlpha = {
-	Dark = 0.5,
-	Darker = 0.75,
-	Darkest = 0.95
+	Dark = 0.3,
+	Darker = 0.5,
+	Darkest = 0.75
 }
 
 local filter = Def.Quad{
@@ -40,10 +40,8 @@ local filter = Def.Quad{
 				end
 			elseif SL.Global.GameMode == "ECFA" then
 				if StageStats:FullComboOfScore('TapNoteScore_W1') then
-					comboColor = color("#21CCE8") -- blue
+					comboColor = color("#e29c18") -- gold
 				elseif StageStats:FullComboOfScore('TapNoteScore_W2') then
-					comboColor = color("#21CCE8") -- blue
-				elseif StageStats:FullComboOfScore('TapNoteScore_W3') then
 					comboColor = color("#e29c18") -- gold
 				else
 					comboColor = color("#66c955") -- green

@@ -3,7 +3,7 @@ local pn = ToEnumShortString(player)
 
 local mode = ""
 if SL.Global.GameMode == "StomperZ" then mode = "StomperZ" end
-if SL.Global.GameMode == "ECFA" then mode = "ECFA" end
+if SL.Global.GameMode == "ECFA" then mode = "StomperZ" end --Use stomperz labels for ECFA
 
 -- tap note types
 -- Iterating through the enum isn't worthwhile because the sequencing is so bizarre...
@@ -21,7 +21,7 @@ local StomperZColors = {
 	color("#e29c18"),	-- gold
 	color("#66c955"),	-- green
 	color("#21CCE8"),	-- blue
-	color("#000000"),	-- black
+	color("#1E282F"),	-- black
 	color("#ff0000")	-- red
 }
 
@@ -67,7 +67,7 @@ for index, label in ipairs(TNSNames) do
 				self:diffuse( StomperZColors[index] )
 
 			elseif SL.Global.GameMode == "ECFA" then
-				self:diffuse( ECFAColors[index] )
+				self:diffuse( StomperZColors[index] ) --Using stomperz colors for ECFA
 			end
 
 

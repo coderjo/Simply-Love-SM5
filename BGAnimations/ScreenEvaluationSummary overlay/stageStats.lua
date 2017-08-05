@@ -211,7 +211,7 @@ for player in ivalues(Players) do
 					if SL.Global.GameMode == "StomperZ" then
 						self:diffuse( colors.StomperZ[i] )
 					elseif SL.Global.GameMode == "ECFA" then
-						self:diffuse( colors.ECFA[i] )
+						self:diffuse( colors.StomperZ[i] ) --Use Stomperz colors for ECFA
 					else
 						self:diffuse( colors.Competitive[i] )
 					end

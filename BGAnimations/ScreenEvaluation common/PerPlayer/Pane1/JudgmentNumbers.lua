@@ -21,7 +21,7 @@ local StomperZColors = {
 	color("#e29c18"),	-- gold
 	color("#66c955"),	-- green
 	color("#21CCE8"),	-- blue
-	color("#000000"),	-- black
+	color("#000000"),	-- grey
 	color("#ff0000")	-- red
 }
 
@@ -62,7 +62,7 @@ for index, window in ipairs(TapNoteScores.Types) do
 
 			-- if ECFA, color the JudgmentNumbers
 			elseif SL.Global.GameMode == "ECFA" then
-				self:diffuse( ECFAColors[index] )
+				self:diffuse( StomperZColors[index] )
 			end
 
 			-- check for Decents/Way Offs
@@ -71,12 +71,13 @@ for index, window in ipairs(TapNoteScores.Types) do
 			-- If Way Offs were turned off, the leading 0s should not
 			-- be colored any differently than the (lack of) JudgmentNumber,
 			-- so load a unique Metric group.
-			if gmods.DecentsWayOffs == "Decents Only" and window == "W5" then
+			if SL.Global.GameMode ~= "ECFA" and window == "W5" and gmods.DecentsWayOffs == "Decents Only" then
 				self:Load("RollingNumbersEvaluationNoDecentsWayOffs")
 				self:diffuse(color("#444444"))
+			end
 
 			-- If both Decents and WayOffs were turned off, the same logic applies.
-			elseif gmods.DecentsWayOffs == "Off" and (window == "W4" or window == "W5") then
+			if gmods.DecentsWayOffs == "Off" and (window == "W4" or window == "W5") then
 				self:Load("RollingNumbersEvaluationNoDecentsWayOffs")
 				self:diffuse(color("#444444"))
 
@@ -84,6 +85,7 @@ for index, window in ipairs(TapNoteScores.Types) do
 			-- group "RollingNumberEvaluationA"	which does that for us.
 			else
 				self:Load("RollingNumbersEvaluationA")
+				if SL.Global.GameMode == "ECFA" and window == "W5" then self:diffuse(color("#00000000")) end
 			end
 		end,
 		BeginCommand=function(self)

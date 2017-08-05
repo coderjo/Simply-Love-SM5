@@ -55,22 +55,43 @@ return Def.ActorFrame {
 		kids.Number:settext( CurrentCombo )
 
 
-		if (SL.Global.GameMode ~= "ECFA" and param.FullComboW1) or (SL.Global.GameMode == "ECFA" and (param.FullComboW1 or param.FullComboW2)) then
-			-- blue combo
-			kids.Number:playcommand("ChangeColor", {Color1="#C8FFFF", Color2="#6BF0FF"})
+		if(SL.Global.GameMode == "ECFA") then
+			if (param.FullComboW1) then
+				-- blue combo
+				kids.Number:playcommand("ChangeColor", {Color1="#cccccc", Color2="#FFFFFF"})
 
-		elseif (SL.Global.GameMode ~= "ECFA" and param.FullComboW2) or (SL.Global.GameMode == "ECFA" and param.FullComboW3) then
-			-- gold combo
-			kids.Number:playcommand("ChangeColor", {Color1="#FDFFC9", Color2="#FDDB85"})
+			elseif (param.FullComboW2) then
+				-- gold combo
+				kids.Number:playcommand("ChangeColor", {Color1="#FDFFC9", Color2="#FDDB85"})
 
-		elseif param.Combo then
-			-- normal (white) combo
-			kids.Number:stopeffect():diffuse( Color.White )
+			elseif param.Combo then
+				-- normal (white) combo
+				kids.Number:stopeffect():diffuse( color("#cccccc") )
 
+			else
+				-- miss (red) combo
+				kids.Number:stopeffect():diffuse( Color.Red )
+			end
 		else
-			-- miss (red) combo
-			kids.Number:stopeffect():diffuse( Color.Red )
+			if (param.FullComboW1) then
+				-- blue combo
+				kids.Number:playcommand("ChangeColor", {Color1="#C8FFFF", Color2="#6BF0FF"})
+
+			elseif (param.FullComboW2) then
+				-- gold combo
+				kids.Number:playcommand("ChangeColor", {Color1="#FDFFC9", Color2="#FDDB85"})
+
+			elseif param.Combo then
+				-- normal (white) combo
+				kids.Number:stopeffect():diffuse( Color.White )
+
+			else
+				-- miss (red) combo
+				kids.Number:stopeffect():diffuse( Color.Red )
+			end
 		end
+
+		
 	end,
 
 	-- load the milestones actors now and trigger them to display

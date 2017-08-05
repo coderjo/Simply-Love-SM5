@@ -17,7 +17,7 @@ local colors = {
 		color("#c9855e"),	-- peach?
 		color("#ff0000")	-- red
 	},
-	ECFA = {
+	ECFA_Actual = {
 		color("#21CCE8"),	-- blue
 		color("#ffffff"),	-- white
 		color("#e29c18"),	-- gold
@@ -32,12 +32,20 @@ local colors = {
 		color("#21CCE8"),	-- blue
 		color("#000000"),	-- black
 		color("#ff0000")	-- red
+	},
+	ECFA = {
+		color("#FFFFFF"),	-- white
+		color("#e29c18"),	-- gold
+		color("#66c955"),	-- green
+		color("#21CCE8"),	-- blue
+		color("#000000"),	-- black
+		color("#ff0000")	-- red
 	}
 }
 
 local abbreviations = {
 	Competitive = { "Fan", "Ex", "Gr", "Dec", "WO" },
-	ECFA = { "Fan", "Fan", "Ex", "Gr", "Dec" },
+	ECFA = { "Perf", "Perf", "Gr", "Good", "" },
 	StomperZ = { "Perf", "Perf", "Gr", "Good", "" }
 }
 

@@ -82,10 +82,34 @@ local Overrides = {
 				end
 			end
 
+			if SL.Global.GameMode == "ECFA" then
+				for noteskin in ivalues(all) do
+					if not string.find(noteskin, "hardcore") then
+						for i=1,#all do
+							if noteskin == all[i] then
+								table.remove(all, i)
+								break
+							end
+						end
+					end
+				end
+			else
+				for noteskin in ivalues(all) do
+					if string.find(noteskin, "hardcore") then
+						for i=1,#all do
+							if noteskin == all[i] then
+								table.remove(all, i)
+								break
+							end
+						end
+					end
+				end
+			end
 			-- It's possible a user might want to hide stock notesksins
 			-- but only have stock noteskins.  If so, just return all noteskins.
 			if #all == 0 then all = NOTESKIN:GetNoteSkinNames() end
 
+			SM(all)
 			return all
 		end,
 		LoadSelections = function(self, list, pn)

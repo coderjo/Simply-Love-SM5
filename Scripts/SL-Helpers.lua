@@ -111,8 +111,8 @@ function GetComboThreshold( MaintainOrContinue )
 
 	if CurrentGame == "dance" then
 		if SL.Global.GameMode == "StomperZ" or SL.Global.GameMode=="ECFA" then
-			ComboThresholdTable.dance.Maintain = "TapNoteScore_W4"
-			ComboThresholdTable.dance.Continue = "TapNoteScore_W4"
+			ComboThresholdTable.dance.Maintain = "TapNoteScore_W3"
+			ComboThresholdTable.dance.Continue = "TapNoteScore_W3"
 		end
 	end
 

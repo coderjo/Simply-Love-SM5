@@ -24,28 +24,28 @@ local Offset, CurrentSecond, TimingWindow, x, y, TempQuad
 -- Standard colors, but with slight opacity.
 local colors = {
 	Competitive = {
-		color("#21CCE8aa"),	-- blue
-		color("#e29c18aa"),	-- gold
-		color("#66c955aa"),	-- green
-		color("#5b2b8eaa"),	-- purple
-		color("#c9855eaa"),	-- peach?
-		color("#ff0000aa")	-- red
+		color("#21CCE8dd"),	-- blue
+		color("#e29c18dd"),	-- gold
+		color("#66c955dd"),	-- green
+		color("#5b2b8edd"),	-- purple
+		color("#c9855edd"),	-- peach?
+		color("#ff0000dd")	-- red
 	},
 	ECFA = {
-		color("#21CCE8aa"),	-- blue
-		color("#ffffffaa"),	-- white
-		color("#e29c18aa"),	-- gold
-		color("#66c955aa"),	-- green
-		color("#5b2b8eaa"),	-- purple
-		color("#ff0000aa")	-- red
+		color("#FFFFFFdd"),	-- white
+		color("#e29c18dd"),	-- gold
+		color("#66c955dd"),	-- green
+		color("#21CCE8dd"),	-- blue
+		color("#000000dd"),	-- black
+		color("#ff0000dd")	-- red
 	},
 	StomperZ = {
-		color("#FFFFFFaa"),	-- white
-		color("#e29c18aa"),	-- gold
-		color("#66c955aa"),	-- green
-		color("#21CCE8aa"),	-- blue
-		color("#000000aa"),	-- black
-		color("#ff0000aa")	-- red
+		color("#FFFFFFdd"),	-- white
+		color("#e29c18dd"),	-- gold
+		color("#66c955dd"),	-- green
+		color("#21CCE8dd"),	-- blue
+		color("#000000dd"),	-- black
+		color("#ff0000dd")	-- red
 	}
 }
 
@@ -53,6 +53,7 @@ local colors = {
 -- if players have disabled W4 or W4+W5, there will be a smaller pool
 -- of judgments that could have possibly been earned
 local num_judgments_available = (SL.Global.ActiveModifiers.DecentsWayOffs=="Decents Only" and 4) or (SL.Global.ActiveModifiers.DecentsWayOffs=="Off" and 3) or 5
+if SL.Global.GameMode == "ECFA" then num_judgments_available = 4 end
 local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..num_judgments_available]
 -- ---------------------------------------------
 
