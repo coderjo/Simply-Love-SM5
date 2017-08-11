@@ -1,3 +1,7 @@
+if GAMESTATE:IsCourseMode() then
+	return Def.Actor{ InitCommand=function(self) self:visible(false) end }
+end
+
 local player = ...
 
 local Song = GAMESTATE:GetCurrentSong()
@@ -9,10 +13,12 @@ local PeakNPS, NPSperMeasure = GetNPSperMeasure(Song, StepsType, Difficulty)
 
 if NPSperMeasure and #NPSperMeasure > 1 then
 
-	local width = GetNotefieldWidth(player)*1.2
+	local width = GetNotefieldWidth(player)
 	local height = GetNotefieldWidth(player)/2.25
 
 	local LifeMeter, life_verts = nil, {}
+	local LifeLineThickness = 2
+
 	local TimingData = Song:GetTimingData()
 
 	-- Don't use Song:MusicLengthSeconds() because it includes time
@@ -21,17 +27,23 @@ if NPSperMeasure and #NPSperMeasure > 1 then
 	local TotalSeconds = Song:GetLastSecond() - FirstSecond
 
 	local verts = {}
-	local x, y
-	local w = width/TotalSeconds
+	local x, y, t
 
 	for i, nps in ipairs(NPSperMeasure) do
-		x = TimingData:GetElapsedTimeFromBeat(i*4) * w
+		-- i will represent the current measure number but will be 1 larger than
+		-- it should be (measures in SM start at 0; indexed Lua tables start at 1)
+		-- subtract 1 from i now to get the actual measure number to calculate time
+		t = TimingData:GetElapsedTimeFromBeat((i-1)*4)
+
+		x = scale(t, 0, TotalSeconds, 0, width)
 		y = -1 * scale(nps, 0, PeakNPS, 0, height)
 
 		verts[#verts+1] = {{x, 0, 0}, {1,1,1,1}}
 		verts[#verts+1] = {{x, y, 0}, {1,1,1,1}}
 	end
 
+	-- -------------------------------------------------
+	-- Actors defined below this line
 
 	local af = Def.ActorFrame{
 		InitCommand=function(self)
@@ -67,7 +79,8 @@ if NPSperMeasure and #NPSperMeasure > 1 then
 			self:SetDrawState{Mode="DrawMode_QuadStrip"}
 				:SetVertices(verts)
 				:align(0, 0)
-				:x( WideScale(0,60) )
+				-- offset the graph's x-position by half the thickness of the LifeLine
+				:x( WideScale(0,60) + LifeLineThickness/2 )
 				:y(height)
 				:MaskSource()
 		end
@@ -76,11 +89,10 @@ if NPSperMeasure and #NPSperMeasure > 1 then
 	local gradient = Def.Sprite{
 		Texture="./NPS-gradient.png",
 		InitCommand=function(self)
-			self:setsize(width, height)
+			self:zoomto(_screen.w/2, height)
 				:align(0,0)
 				:x( WideScale(0,60) )
 				:ztestmode("ZTestMode_WriteOnFail")
-
 		end
 	}
 
@@ -88,7 +100,7 @@ if NPSperMeasure and #NPSperMeasure > 1 then
 		Name="LifeLine_AMV",
 		InitCommand=function(self)
 			self:SetDrawState{Mode="DrawMode_LineStrip"}
-				:SetLineWidth(2)
+				:SetLineWidth( LifeLineThickness )
 				:align(0, 0)
 				:x( WideScale(0,60) )
 		end,
