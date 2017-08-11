@@ -11,6 +11,12 @@ local function GetModsAndPlayerOptions(player)
 	return mods, playeroptions
 end
 
+local function IndexOf(t,val)
+    for k,v in ipairs(t) do 
+        if v == val then return k end
+    end
+end
+
 ------------------------------------------------------------
 -- Define what custom OptionRows there are, and override the
 -- generic OptionRow (defined later, below) for each as necessary.
@@ -81,27 +87,16 @@ local Overrides = {
 					end
 				end
 			end
-
 			if SL.Global.GameMode == "ECFA" then
-				for noteskin in ivalues(all) do
-					if not string.find(noteskin, "hardcore") then
-						for i=1,#all do
-							if noteskin == all[i] then
-								table.remove(all, i)
-								break
-							end
-						end
+				for i=#all, 1, -1 do
+					if string.find(all[i], "`") == nil then
+						table.remove(all, i)
 					end
 				end
 			else
-				for noteskin in ivalues(all) do
-					if string.find(noteskin, "hardcore") then
-						for i=1,#all do
-							if noteskin == all[i] then
-								table.remove(all, i)
-								break
-							end
-						end
+				for i=#all, 1, -1 do
+					if string.find(all[i], "`") then
+						table.remove(all, i)
 					end
 				end
 			end
@@ -109,7 +104,6 @@ local Overrides = {
 			-- but only have stock noteskins.  If so, just return all noteskins.
 			if #all == 0 then all = NOTESKIN:GetNoteSkinNames() end
 
-			SM(all)
 			return all
 		end,
 		LoadSelections = function(self, list, pn)
