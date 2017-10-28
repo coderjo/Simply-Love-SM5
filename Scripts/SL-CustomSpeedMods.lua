@@ -1,17 +1,16 @@
-function GetCourseModeBPMs()
-	local Players, player, trail, trailEntries, lowest, highest, text, range
+function GetCourseModeBPMs(course)
+	local player, courseEntries, lowest, highest, text, range
 
-	Players = GAMESTATE:GetHumanPlayers()
-	player = Players[1]
+	player = GAMESTATE:GetMasterPlayerNumber()
 
 	if player then
-		trail = GAMESTATE:GetCurrentTrail(player)
+		course = course or GAMESTATE:GetCurrentCourse(player)
 
-		if trail then
-			trailEntries = trail:GetTrailEntries()
+		if course then
+			courseEntries = course:GetCourseEntries()
 
-			for k,trailEntry in ipairs(trailEntries) do
-				local song = trailEntry:GetSong()
+			for k,courseEntry in ipairs(courseEntries) do
+				local song = courseEntry:GetSong()
 				local bpms = song:GetDisplayBpms()
 
 				-- if either display BPM is negative or 0, use the actual BPMs instead...
@@ -48,6 +47,7 @@ end
 
 function GetDisplayBPMs()
 	local text = ""
+	local MusicRate = SL.Global.ActiveModifiers.MusicRate
 
 	-- if in "normal" mode
 	if not GAMESTATE:IsCourseMode() then
@@ -63,11 +63,19 @@ function GetDisplayBPMs()
 
 			--if a single bpm suffices
 			if bpm[1] == bpm[2] then
-				text = round(bpm[1])
+				if MusicRate == 1 then
+					text = round(bpm[1])
+				else
+					text = round(bpm[1] * MusicRate, 1)
+				end
 
 			-- if we have a range of bpms
 			else
-				text = round(bpm[1]) .. " - " .. round(bpm[2])
+				if MusicRate == 1 then
+					text = round(bpm[1]) .. " - " .. round(bpm[2])
+				else
+					text = round(bpm[1] * MusicRate, 1) .. " - " .. round(bpm[2] * MusicRate, 1)
+				end
 			end
 		end
 
@@ -78,12 +86,11 @@ function GetDisplayBPMs()
 			local lowest = range[1]
 			local highest = range[2]
 
-
 			if lowest and highest then
 				if lowest == highest then
-					text = round(lowest)
+					text = round(lowest * MusicRate)
 				else
-					text = round(lowest) .. " - " .. round(highest)
+					text = round(lowest * MusicRate) .. " - " .. round(highest * MusicRate)
 				end
 			end
 		end

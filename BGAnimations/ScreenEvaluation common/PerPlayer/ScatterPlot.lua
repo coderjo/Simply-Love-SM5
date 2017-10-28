@@ -18,36 +18,7 @@ local FirstSecond = GAMESTATE:GetCurrentSong():GetFirstSecond()
 local TotalSeconds = GAMESTATE:GetCurrentSong():GetLastSecond() - FirstSecond
 
 -- variables that will be used and re-used in the loop while calculating the AMV's vertices
-local Offset, CurrentSecond, TimingWindow, x, y, TempQuad
-
--- ---------------------------------------------
--- Standard colors, but with slight opacity.
-local colors = {
-	Competitive = {
-		color("#21CCE8dd"),	-- blue
-		color("#e29c18dd"),	-- gold
-		color("#66c955dd"),	-- green
-		color("#5b2b8edd"),	-- purple
-		color("#c9855edd"),	-- peach?
-		color("#ff0000dd")	-- red
-	},
-	ECFA = {
-		color("#FFFFFFdd"),	-- white
-		color("#e29c18dd"),	-- gold
-		color("#66c955dd"),	-- green
-		color("#21CCE8dd"),	-- blue
-		color("#000000dd"),	-- black
-		color("#ff0000dd")	-- red
-	},
-	StomperZ = {
-		color("#FFFFFFdd"),	-- white
-		color("#e29c18dd"),	-- gold
-		color("#66c955dd"),	-- green
-		color("#21CCE8dd"),	-- blue
-		color("#000000dd"),	-- black
-		color("#ff0000dd")	-- red
-	}
-}
+local Offset, CurrentSecond, TimingWindow, x, y, c, r, g, b
 
 -- ---------------------------------------------
 -- if players have disabled W4 or W4+W5, there will be a smaller pool
@@ -81,12 +52,20 @@ local amv = Def.ActorMultiVertex{
 				TimingWindow = DetermineTimingWindow(Offset)
 				y = scale(Offset, worst_window, -worst_window, 0, GraphHeight)
 
-				table.insert( verts, {{x, y, 0}, colors[SL.Global.GameMode][TimingWindow]} )
-				table.insert( verts, {{x+1.5, y, 0}, colors[SL.Global.GameMode][TimingWindow]} )
-				table.insert( verts, {{x+1.5, y+1.5, 0}, colors[SL.Global.GameMode][TimingWindow]} )
-				table.insert( verts, {{x, y+1.5, 0}, colors[SL.Global.GameMode][TimingWindow]} )
-			else
+				-- get the appropriate color from the global SL table
+				c = SL.JudgmentColors[SL.Global.GameMode][TimingWindow]
+				-- get the red, green, and blue values from that color
+				r = c[1]
+				g = c[2]
+				b = c[3]
 
+				-- insert four datapoints into the verts tables, effectively generating a single quadrilateral
+				table.insert( verts, {{x, y, 0}, {r,g,b,0.666} } )
+				table.insert( verts, {{x+1.5, y, 0}, {r,g,b,0.666} } )
+				table.insert( verts, {{x+1.5, y+1.5, 0}, {r,g,b,0.666} } )
+				table.insert( verts, {{x, y+1.5, 0}, {r,g,b,0.666} } )
+			else
+				-- else, a miss should be a quadrilateral that is the height of the entire graph and red
 				table.insert( verts, {{x, 0, 0}, color("#ff000077")} )
 				table.insert( verts, {{x+1, 0, 0}, color("#ff000077")} )
 				table.insert( verts, {{x+1, GraphHeight, 0}, color("#ff000077")} )
