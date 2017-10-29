@@ -27,20 +27,43 @@ local t = Def.ActorFrame{
 			if StepsOrTrails then
 
 				StepsToDisplay = GetStepsToDisplay(StepsOrTrails)
+				if GAMESTATE:IsCourseMode() == false then
+					for RowNumber=1,GridRows do
+						if StepsToDisplay[RowNumber] then
+							-- if this particular song has a stepchart for this row, update the Meter
+							-- and BlockRow coloring appropriately
+							local meter = StepsToDisplay[RowNumber]:GetMeter()
+							local difficulty = StepsToDisplay[RowNumber]:GetDifficulty()
+							self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+							self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
+						else
+							-- otherwise, set the meter to "?" and hide this particular colored BlockRow
+							self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Unset")
+							self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Unset")
 
-				for RowNumber=1,GridRows do
-					if StepsToDisplay[RowNumber] then
-						-- if this particular song has a stepchart for this row, update the Meter
-						-- and BlockRow coloring appropriately
-						local meter = StepsToDisplay[RowNumber]:GetMeter()
-						local difficulty = StepsToDisplay[RowNumber]:GetDifficulty()
-						self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
-						self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Set", {Meter=meter, Difficulty=difficulty})
-					else
-						-- otherwise, set the meter to an empty string and hide this particular colored BlockRow
-						self:GetChild("Grid"):GetChild("Meter_"..RowNumber):playcommand("Unset")
-						self:GetChild("Grid"):GetChild("Blocks_"..RowNumber):playcommand("Unset")
+						end
+					end
+				else
+					--clear the text
+					for i=1, NumSongsInCourse do
+						self:GetChild("Grid"):GetChild("CourseSongName"..i):playcommand("Unset")
+						self:GetChild("Grid"):GetChild("CourseSongMeter"..i):playcommand("Unset")
+					end
+					--Get the current trail based on the Master Player Number, extract the song information from each trail entry
+					--It shouldn't matter if it's P1 or P2 since Marathon mode locks you to the same difficulty
+					local player = GAMESTATE:GetMasterPlayerNumber()
+					local trail_entries = GAMESTATE:GetCurrentTrail(player):GetTrailEntries()
 
+					for i=1, #trail_entries do
+						local song = {}
+						song["Title"] = trail_entries[i]:GetSong():GetDisplayMainTitle()
+						song["DifficultyColor"] = DifficultyColor( trail_entries[i]:GetSteps():GetDifficulty() )
+						song["Meter"] = trail_entries[i]:GetSteps():GetMeter()
+
+						if i <= NumSongsInCourse then
+							self:GetChild("Grid"):GetChild("CourseSongMeter"..i):playcommand("Set", {SongToDisplay=song})
+						 	self:GetChild("Grid"):GetChild("CourseSongName"..i):playcommand("Set", {SongToDisplay=song})
+						end
 					end
 				end
 			end
@@ -83,7 +106,6 @@ if GAMESTATE:IsCourseMode() == false then
 		OnCommand=function(self)
 			local width = self:GetWidth()
 			local height= self:GetHeight()
-<<<<<<< HEAD
 			self:zoomto(width * GridColumns * GridZoomX, height * GridRows * BlockZoomY)
 			self:y( 3 * height * BlockZoomY )
 			self:customtexturerect(0, 0, GridColumns, GridRows)
@@ -145,16 +167,6 @@ if GAMESTATE:IsCourseMode() == false then
 			UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
 		}
 	end
-=======
-			self:y( RowNumber * height * BlockZoomY)
-			self:zoomto(width * GridColumns * GridZoomX, height * BlockZoomY)
-		end,
-		SetCommand=function(self, params)
-			-- our grid only supports charts with up to a 20-block difficulty meter
-			-- but charts can have higher difficulties
-			-- handle that here by clamping the value to be between 1 and, at most, 20
-			local meter = clamp( params.Meter, 1, GridColumns )
->>>>>>> dguzek/master
 
 else
 	--TODO: Add the Grid Children for the Course song list here
@@ -202,23 +214,6 @@ else
 		}
 	end
 
-<<<<<<< HEAD
-=======
-		InitCommand=function(self)
-			local height = self:GetParent():GetChild("Blocks_"..RowNumber):GetHeight()
-			self:horizalign(right)
-			self:y(RowNumber * height * BlockZoomY)
-			self:x( IsUsingWideScreen() and -140 or -126 )
-			self:zoom(0.3)
-		end,
-		SetCommand=function(self, params)
-			-- diffuse and set each chart's difficulty meter
-			self:diffuse( DifficultyColor(params.Difficulty) )
-			self:settext(params.Meter)
-		end,
-		UnsetCommand=cmd(settext, ""; diffuse,color("#182025")),
-	}
->>>>>>> dguzek/master
 end
 
 t[#t+1] = Grid
