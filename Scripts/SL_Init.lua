@@ -118,10 +118,10 @@ SL = {
 			color("#ff0000")	-- red
 		},
 		ECFA = {
-			color("#21CCE8"),	-- blue
 			color("#ffffff"),	-- white
 			color("#e29c18"),	-- gold
 			color("#66c955"),	-- green
+			color("#21CCE8"),	-- blue
 			color("#5b2b8e"),	-- purple
 			color("#ff0000")	-- red
 		},
@@ -264,29 +264,29 @@ SL = {
 			LifePercentChangeHitMine=-0.050,
 		},
 		ECFA = {
-			PercentScoreWeightW1=10,
-			PercentScoreWeightW2=9,
-			PercentScoreWeightW3=7,
-			PercentScoreWeightW4=4,
+			PercentScoreWeightW1=3,
+			PercentScoreWeightW2=2,
+			PercentScoreWeightW3=1,
+			PercentScoreWeightW4=0,
 			PercentScoreWeightW5=0,
 			PercentScoreWeightMiss=0,
 			PercentScoreWeightLetGo=0,
-			PercentScoreWeightHeld=10,
-			PercentScoreWeightHitMine=-5,
+			PercentScoreWeightHeld=3,
+			PercentScoreWeightHitMine=-3,
 
-			GradeWeightW1=10,
-			GradeWeightW2=9,
-			GradeWeightW3=7,
-			GradeWeightW4=4,
+			GradeWeightW1=3,
+			GradeWeightW2=2,
+			GradeWeightW3=1,
+			GradeWeightW4=0,
 			GradeWeightW5=0,
 			GradeWeightMiss=0,
 			GradeWeightLetGo=0,
-			GradeWeightHeld=10,
-			GradeWeightHitMine=-5,
+			GradeWeightHeld=3,
+			GradeWeightHitMine=-3,
 
-			LifePercentChangeW1=0.008,
+			LifePercentChangeW1=0.016,
 			LifePercentChangeW2=0.008,
-			LifePercentChangeW3=0.008,
+			LifePercentChangeW3=0.004,
 			LifePercentChangeW4=-0.05,
 			LifePercentChangeW5=0,
 			LifePercentChangeMiss=-0.1,

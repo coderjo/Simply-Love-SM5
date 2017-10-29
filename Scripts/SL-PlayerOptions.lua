@@ -77,7 +77,7 @@ local Overrides = {
 					"midi-solo", "midi-vivid", "midi-vivid-3d", "retro",
 					"retrobar", "retrobar-splithand_whiteblue"
 				}
-
+				
 				for stock_noteskin in ivalues(stock) do
 					for i=1,#all do
 						if stock_noteskin == all[i] then
@@ -87,10 +87,18 @@ local Overrides = {
 					end
 				end
 			end
+
 			if SL.Global.GameMode == "ECFA" then
 				for i=#all, 1, -1 do
 					if string.find(all[i], "`") == nil then
 						table.remove(all, i)
+					end
+					if GAMESTATE:GetCurrentStyle():GetStyleType() ~= "StyleType_OnePlayerTwoSides" then
+						if all[i] ~= nil then
+							if string.find(all[i], "couples") then
+								table.remove(all, i)
+							end
+						end
 					end
 				end
 			else
@@ -98,8 +106,16 @@ local Overrides = {
 					if string.find(all[i], "`") then
 						table.remove(all, i)
 					end
+					if GAMESTATE:GetCurrentStyle():GetStyleType() ~= "StyleType_OnePlayerTwoSides" then				
+						if all[i] ~= nil then
+							if string.find(all[i], "couples") then
+								table.remove(all, i)
+							end
+						end
+					end
 				end
 			end
+			
 			-- It's possible a user might want to hide stock notesksins
 			-- but only have stock noteskins.  If so, just return all noteskins.
 			if #all == 0 then all = NOTESKIN:GetNoteSkinNames() end
