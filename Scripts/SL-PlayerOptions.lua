@@ -64,6 +64,7 @@ local Overrides = {
 	},
 	-------------------------------------------------------------------------
 	NoteSkin = {
+		ExportOnChange = true,
 		Choices = function()
 
 			local all = NOTESKIN:GetNoteSkinNames()
@@ -128,9 +129,11 @@ local Overrides = {
 			for i=1,#list do
 				if list[i] then
 					mods.NoteSkin = self.Choices[i]
+					break
 				end
 			end
 
+			MESSAGEMAN:Broadcast('NoteSkinChanged', {Player=pn, NoteSkin=mods.NoteSkin})
 			playeroptions:NoteSkin( mods.NoteSkin )
 		end
 	},
