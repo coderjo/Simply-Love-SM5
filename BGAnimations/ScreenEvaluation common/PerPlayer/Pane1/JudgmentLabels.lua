@@ -46,7 +46,7 @@ for index, label in ipairs(TNSNames) do
 
 			-- diffuse the judgement colors
 			if SL.Global.GameMode == "Competitive" then
-				self:diffuse( SL.JudgmentColors.Competitive[index ])
+				self:diffuse( SL.JudgmentColors.Competitive[index] )
 			elseif SL.Global.GameMode == "StomperZ" then
 				self:diffuse( SL.JudgmentColors.StomperZ[index] )
 			elseif SL.Global.GameMode == "ECFA" then
