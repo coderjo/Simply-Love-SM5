@@ -38,11 +38,11 @@ for index, window in ipairs(TapNoteScores.Types) do
 		InitCommand=function(self)
 			self:zoom(0.5):horizalign(right)
 
-			-- if StomperZ, color the JudgmentNumbers
-			if SL.Global.GameMode == "StomperZ" then
+			-- diffuse the judgement colors
+			if SL.Global.GameMode == "Competitive" then
+				self:diffuse( SL.JudgmentColors.Competitive[index] )
+			elseif SL.Global.GameMode == "StomperZ" then
 				self:diffuse( SL.JudgmentColors.StomperZ[index] )
-
-			-- if ECFA, color the JudgmentNumbers
 			elseif SL.Global.GameMode == "ECFA" then
 				self:diffuse( SL.JudgmentColors.ECFA[index] )
 			end
@@ -55,19 +55,19 @@ for index, window in ipairs(TapNoteScores.Types) do
 			-- so load a unique Metric group.
 			if SL.Global.GameMode ~= "ECFA" and window == "W5" and gmods.DecentsWayOffs == "Decents Only" then
 				self:Load("RollingNumbersEvaluationNoDecentsWayOffs")
-				self:diffuse(color("#444444"))
+				self:visible(false)
 			end
 
 			-- If both Decents and WayOffs were turned off, the same logic applies.
 			if gmods.DecentsWayOffs == "Off" and (window == "W4" or window == "W5") then
 				self:Load("RollingNumbersEvaluationNoDecentsWayOffs")
-				self:diffuse(color("#444444"))
+				self:visible(false)
 
 			-- Otherwise, We want leading 0s to be dimmed, so load the Metrics
 			-- group "RollingNumberEvaluationA"	which does that for us.
 			else
 				self:Load("RollingNumbersEvaluationA")
-				if SL.Global.GameMode == "ECFA" and window == "W5" then self:diffuse(color("#00000000")) end
+				if SL.Global.GameMode == "ECFA" and window == "W5" then self:visible(false) end
 			end
 		end,
 		BeginCommand=function(self)
