@@ -26,11 +26,11 @@ return Def.ActorFrame{
 		OnCommand=cmd(x, 70)
 	},
 
-	LoadFont("_miso")..{
+	LoadFont("_wendy white")..{
 		Text="Tournament Points: ",
 		Name="PointsLabel",
-		InitCommand=cmd(valign, -7; horizalign, left; zoom,0.45 ),
-		OnCommand=cmd(x, -24; y, -27)
+		InitCommand=cmd(valign, -7; horizalign, left; zoom,0.1 ),
+		OnCommand=cmd(x, -64; y, -2)
 	},
 	Def.RollingNumbers {
 		Font="_wendy white",
