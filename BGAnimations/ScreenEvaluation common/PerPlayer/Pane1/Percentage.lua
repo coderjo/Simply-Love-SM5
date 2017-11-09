@@ -27,10 +27,10 @@ return Def.ActorFrame{
 	},
 
 	LoadFont("_wendy white")..{
-		Text="Tournament Points: ",
+		Text="EX: ",
 		Name="PointsLabel",
-		InitCommand=cmd(valign, -7; horizalign, left; zoom,0.1 ),
-		OnCommand=cmd(x, -64; y, -2)
+		InitCommand=cmd(valign, -6.7; horizalign, left; zoom,0.1 ),
+		OnCommand=cmd(x, 15)
 	},
 	Def.RollingNumbers {
 		Font="_wendy white",
