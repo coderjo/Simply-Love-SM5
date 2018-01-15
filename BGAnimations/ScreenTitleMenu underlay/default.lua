@@ -35,7 +35,7 @@ local chillGrill = "ChillGrill (doubleres).png"
 local itgLogo = "InTheGroove (doubleres).png"
 local heatherCory = "HeatherCory (doubleres).png"
 
-return Def.ActorFrame{
+local af = Def.ActorFrame{
 	InitCommand=function(self)
 		--see: ./Scripts/SL_Initialize.lua
 		InitializeSimplyLove()
@@ -80,3 +80,14 @@ return Def.ActorFrame{
 		OffCommand=function(self) self:linear(0.5):shadowlength(0) end
 	}
 }
+
+-- the best way to spread holiday cheer is singing loud for all to hear
+if PREFSMAN:GetPreference("EasterEggs") and MonthOfYear()==11 then
+	af[#af+1] = Def.Sprite{
+		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
+		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15) end,
+		OnCommand=function(self) self:decelerate(1.333):y(-110) end
+	}
+end
+
+return af
