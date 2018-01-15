@@ -27,8 +27,14 @@ return LoadActor("grades")..{
 			self:visible(false);
 			return;
 		end;
+		
+		if not PROFILEMAN:ProfileWasLoadedFromMemoryCard(params.PlayerNumber) then
+			self:visible(false);
+			return;
+		end;
+
 		local state = grades[params.Grade] or grades.Grade_None;
-		if state == nil or not PROFILEMAN:ProfileWasLoadedFromMemoryCard(params.PlayerNumber) then
+		if state == nil then
 			self:visible(false)
 		else
 			self:visible(true)
