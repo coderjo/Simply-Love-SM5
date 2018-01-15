@@ -28,13 +28,12 @@ return LoadActor("grades")..{
 			return;
 		end;
 		local state = grades[params.Grade] or grades.Grade_None;
-		if state == nil then
+		if state == nil or not PROFILEMAN:ProfileWasLoadedFromMemoryCard(params.PlayerNumber) then
 			self:visible(false)
 		else
 			self:visible(true)
 			self:zoom(0.6)
 			self:diffuse(PlayerColor(params.PlayerNumber))
-			-- if params.PlayerNumber == PLAYER_2 then state = state+1 end
 			self:setstate(state)
 		end
 	end;
