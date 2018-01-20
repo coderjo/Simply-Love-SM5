@@ -1,4 +1,7 @@
--- This actor is duplicated.  Upvalues will not be duplicated.
+if GAMESTATE:IsCourseMode() or not ThemePrefs.Get("ShowGradesInMusicWheel") then
+	return Def.Actor{}
+end
+
 local grades = {
 	Grade_Tier01 = 0,
 	Grade_Tier02 = 1,
@@ -18,30 +21,18 @@ local grades = {
 	Grade_Tier16 = 15,
 	Grade_Tier17 = 16,
 	Grade_Failed = 17,
-	Grade_None = nil };
+}
 
-return LoadActor("grades")..{
-	InitCommand=cmd(pause);
+return Def.Sprite{
+	Texture=THEME:GetPathG("MusicWheelItem","Grades/grades 1x18.png"),
+	InitCommand=function(self) self:zoom( WideScale(0.18, 0.3) ):animate(0) end,
 	SetGradeCommand=function(self, params)
-		if GAMESTATE:IsCourseMode() then
-			self:visible(false);
-			return;
-		end;
-		
-		if not PROFILEMAN:ProfileWasLoadedFromMemoryCard(params.PlayerNumber) then
-			self:visible(false);
-			return;
-		end;
+		local state = grades[params.Grade]
 
-		local state = grades[params.Grade] or grades.Grade_None;
 		if state == nil then
 			self:visible(false)
 		else
-			self:visible(true)
-			self:zoom(0.6)
-			self:diffuse(PlayerColor(params.PlayerNumber))
-			self:setstate(state)
+			self:visible(true):setstate(state)
 		end
-	end;
-};
-
+	end
+}
