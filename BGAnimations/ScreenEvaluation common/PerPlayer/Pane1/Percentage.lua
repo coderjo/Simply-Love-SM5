@@ -30,11 +30,15 @@ return Def.ActorFrame{
 		Text="EX: ",
 		Name="PointsLabel",
 		InitCommand=cmd(valign, -6.7; horizalign, left; zoom,0.1 ),
-		OnCommand=cmd(x, 15)
+		OnCommand=function(self)
+			self:x(15)
+			self:diffusealpha( SL.Global.GameMode == "StomperZ" and 1 or 0 )
+		end
 	},
 	Def.RollingNumbers {
 		Font="_wendy white",
 		InitCommand=function(self)
+			self:diffusealpha( SL.Global.GameMode == "StomperZ" and 1 or 0 )
 			self:valign(-4)
 			self:horizalign(right)
 			self:zoom(0.15)
@@ -46,11 +50,4 @@ return Def.ActorFrame{
 		end
 
 	}
-	-- LoadFont("_wendy white")..{
-	-- 	--Text=actualDP,
-	-- 	Text=99999,
-	-- 	Name="Points",
-	-- 	InitCommand=cmd(valign, -5; horizalign, right; zoom,0.125 ),
-	-- 	OnCommand=cmd(x, 67)
-	-- }
 }

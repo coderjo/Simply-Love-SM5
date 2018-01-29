@@ -11,13 +11,20 @@ local pane_width, pane_height = 300, 180
 local abbreviations = {
 	Competitive = { "Fan", "Ex", "Gr", "Dec", "WO" },
 	ECFA = { "Perf", "Perf", "Gr", "Good", "" },
-	StomperZ = { "Perf", "Def", "Gr", "Good", "" }
+	StomperZ = { "Fan", "Ex", "Gr", "Dec", "" },
 }
 
 -- ---------------------------------------------
 -- if players have disabled W4 or W4+W5, there will be a smaller pool
 -- of judgments that could have possibly been earned
-local num_judgments_available = (SL.Global.ActiveModifiers.DecentsWayOffs=="Decents Only" and 4) or (SL.Global.ActiveModifiers.DecentsWayOffs=="Off" and 3) or 5
+local num_judgments_available
+
+if SL.Global.GameMode == "ECFA" or SL.Global.GameMode == "StomperZ" then
+	num_judgments_available = 4
+else
+	num_judgments_available = (SL.Global.ActiveModifiers.DecentsWayOffs=="Decents Only" and 4) or (SL.Global.ActiveModifiers.DecentsWayOffs=="Off" and 3) or 5
+end 
+
 local worst_window = SL.Preferences[SL.Global.GameMode]["TimingWindowSecondsW"..num_judgments_available]
 
 -- ---------------------------------------------

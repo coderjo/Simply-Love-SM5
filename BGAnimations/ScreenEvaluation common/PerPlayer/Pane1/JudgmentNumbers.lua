@@ -67,7 +67,9 @@ for index, window in ipairs(TapNoteScores.Types) do
 			-- group "RollingNumberEvaluationA"	which does that for us.
 			else
 				self:Load("RollingNumbersEvaluationA")
-				if SL.Global.GameMode == "ECFA" and window == "W5" then self:visible(false) end
+				if ((SL.Global.GameMode == "ECFA" and window == "W5") or (SL.Global.GameMode == "StomperZ" and window == "W5")) then 
+					self:visible(false) 
+				end
 			end
 		end,
 		BeginCommand=function(self)

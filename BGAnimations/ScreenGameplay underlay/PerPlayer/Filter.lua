@@ -10,16 +10,16 @@ end
 
 
 local FilterAlpha = {
-	Dark = 0.3,
-	Darker = 0.5,
-	Darkest = 0.75
+	Dark = 0.4,
+	Darker = 0.6,
+	Darkest = 0.85
 }
 
 local filter = Def.Quad{
 	InitCommand=function(self)
 		self:diffuse(Color.Black)
 			:diffusealpha( FilterAlpha[mods.BackgroundFilter] or 0 )
-			:xy( GetNotefieldX(player), _screen.cy )
+			:xy( GetNotefieldX(player), _screen.cy + 40 )
 			:zoomto( GetNotefieldWidth(), _screen.h )
 	end,
 	OffCommand=function(self) self:queuecommand("ComboFlash") end,

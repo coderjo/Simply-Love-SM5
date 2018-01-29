@@ -165,16 +165,11 @@ function GetPlayerOptionsLineNames()
 end
 
 function GetPlayerOptions2LineNames()
-	local mods = "Turn,Scroll,7,8,9,10,11,12,13,Attacks,Hide,ReceptorArrowsPosition,LifeMeterType,TargetStatus,TargetBar,GameplayExtras,MeasureCounterPosition,MeasureCounter,DecentsWayOffs,Vocalization,ScreenAfterPlayerOptions2"
+	local mods = "Turn,Scroll,7,8,9,10,11,12,13,Attacks,Hide,LifeMeterType,TargetStatus,TargetBar,GameplayExtras,MeasureCounterPosition,MeasureCounter,DecentsWayOffs,Vocalization,ScreenAfterPlayerOptions2"
 
-	-- remove ReceptorArrowsPosition if GameMode isn't StomperZ
-	if SL.Global.GameMode ~= "StomperZ" then
-		mods = mods:gsub("ReceptorArrowsPosition", "")
-	end
-
-	-- remove DecentsWayOffs and LifeMeterType if GameMode is StomperZ
-	if SL.Global.GameMode == "StomperZ" then
-		mods = mods:gsub("DecentsWayOffs,", ""):gsub("LifeMeterType", "")
+	-- remove DecentsWayOffs if GameMode is Tournament or Hardcore
+	if SL.Global.GameMode == "StomperZ" or SL.Global.GameMode == "ECFA" then
+		mods = mods:gsub("DecentsWayOffs,", "")
 	end
 
 	-- remove TargetStatus and TargetBar (IIDX pacemaker) if style is double

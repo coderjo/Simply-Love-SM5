@@ -470,13 +470,14 @@ if SL[pn].ActiveModifiers.TargetScore then
 			local noteX
 			-- aligned to the score
 			if (player == PLAYER_1) then
-				noteX = GetNotefieldX(player) + (GetNotefieldWidth() / 4) - graphX
+				noteX = GetNotefieldX(player) + (GetNotefieldWidth() / 4) - graphX + 35
 			else
-				noteX = GetNotefieldX(player) - (GetNotefieldWidth() / 4) - graphX - 15
+				noteX = GetNotefieldX(player) - (GetNotefieldWidth() / 4) - graphX + 162
 			end
 
-			self:xy( noteX, 56 - graphY ):zoom(0.4)
+			self:xy( noteX, 110 - graphY ):zoom(0.4)
 			self:diffuse(color("#ccccccFF"))
+			self:diffusealpha(0.5)
 		end,
 		UpdateCommand=function(self)
 			local percentDifference = pss:GetPercentDancePoints() - (targetGradeScore * GetCurMaxPercentDancePoints())
@@ -487,11 +488,11 @@ if SL[pn].ActiveModifiers.TargetScore then
 			local shift = 10 ^ roundDigits
 			percentDifference = math.floor(percentDifference * shift + 0.5) / shift
 
-			local textColor = color("#ccccccFF")
+			local textColor = color("#cccccc77")
 			if percentDifference > 0 then 
-				textColor = color("#70f75bFF")
+				textColor = color("#70f75b77")
 			elseif percentDifference < 0 then
-				textColor = color("#ef3939FF")
+				textColor = color("#ef393977")
 			end
 
 			self:settext(string.format("%+2.2f", percentDifference))
