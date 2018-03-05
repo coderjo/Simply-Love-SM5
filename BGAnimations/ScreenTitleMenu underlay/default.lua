@@ -1,93 +1,45 @@
-local TextColor = ThemePrefs.Get("RainbowMode") and Color.Black or Color.White
+InitUserPrefs();
 
-local SongStats = SONGMAN:GetNumSongs() .. " songs in "
-SongStats = SongStats .. SONGMAN:GetNumSongGroups() .. " groups, "
-SongStats = SongStats .. SONGMAN:GetNumCourses() .. " courses"
-
--- - - - - - - - - - - - - - - - - - - - -
-
-local game = GAMESTATE:GetCurrentGame():GetName();
-if game ~= "dance" and game ~= "pump" then
-	game = "techno"
-end
-
--- - - - - - - - - - - - - - - - - - - - -
-local sm_version = ""
-
-if ProductVersion():find("git") then
-	local date = VersionDate()
-	local year = date:sub(1,4)
-	local month = date:sub(5,6)
-	if month:sub(1,1) == "0" then month = month:gsub("0", "") end 
-	month = THEME:GetString("Months", "Month"..month)
-	local day = date:sub(7,8)
-	
-	sm_version = ProductID() .. ", Built " .. month .. " " .. day .. ", " .. year
-else
-	sm_version = ProductID() .. sm_version
-end
--- - - - - - - - - - - - - - - - - - - - -
-
-local image = ThemePrefs.Get("VisualTheme")
-local defaultLogo = "Simply".. image .." (doubleres).png"
-
-local chillGrill = "ChillGrill (doubleres).png"
-local itgLogo = "InTheGroove (doubleres).png"
-local heatherCory = "HeatherCory (doubleres).png"
-
-local af = Def.ActorFrame{
-	InitCommand=function(self)
-		--see: ./Scripts/SL_Initialize.lua
-		InitializeSimplyLove()
-	end,
+local t = Def.ActorFrame {
 	OnCommand=function(self)
-		self:Center()
-		
-		if image == "Arrows" then
-			self:y(_screen.cy + 10)
+		if not FILEMAN:DoesFileExist("Save/ThemePrefs.ini") then
+			Trace("ThemePrefs doesn't exist; creating file")
+			ThemePrefs.ForceSave()
 		end
-	end,
-	OffCommand=cmd(linear,0.5; diffusealpha, 0),
 
-	Def.ActorFrame{
-		InitCommand=function(self)
-			self:zoom(0.8):y(-120):diffusealpha(0)
-		end,
-		OnCommand=function(self)
-			self:sleep(0.2):linear(0.4):diffusealpha(1)
-		end,
-		
-		Def.BitmapText{
-			Font="_miso",
-			Text=sm_version,
-			InitCommand=function(self) self:y(-20):diffuse(TextColor) end,
-		},
-		Def.BitmapText{
-			Font="_miso",
-			Text=SongStats,
-			InitCommand=function(self) self:diffuse(TextColor) end,
-		}
-	},
+		ThemePrefs.Save()
+	end;
+};
 
-	LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
-		InitCommand=function(self)
-			self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
+t[#t+1] = StandardDecorationFromFileOptional("LifeDifficulty","LifeDifficulty");
+t[#t+1] = StandardDecorationFromFileOptional("TimingDifficulty","TimingDifficulty");
+
+t[#t+1] = StandardDecorationFromFileOptional("NumSongs","NumSongs") .. {
+	SetCommand=function(self)
+		local InstalledSongs, AdditionalSongs, InstalledCourses, AdditionalCourses, Groups, Unlocked = 0;
+		if SONGMAN:GetRandomSong() then
+			InstalledSongs, AdditionalSongs, InstalledCourses, AdditionalCourses, Groups, Unlocked =
+				SONGMAN:GetNumSongs(),
+				SONGMAN:GetNumAdditionalSongs(),
+				SONGMAN:GetNumCourses(),
+				SONGMAN:GetNumAdditionalCourses(),
+				SONGMAN:GetNumSongGroups(),
+				SONGMAN:GetNumUnlockedSongs();
+		else
+			return
 		end
-	},
 
-	LoadActor(itgLogo) .. {
-		InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(1) end,
-		OffCommand=function(self) self:linear(0.5):shadowlength(0) end
-	}
-}
+		self:settextf(THEME:GetString("ScreenTitleMenu","%i Songs (%i Groups), %i Courses"), InstalledSongs, Groups, InstalledCourses);
+	end;
+};
 
--- the best way to spread holiday cheer is singing loud for all to hear
-if PREFSMAN:GetPreference("EasterEggs") and MonthOfYear()==11 then
-	af[#af+1] = Def.Sprite{
-		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
-		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15) end,
-		OnCommand=function(self) self:decelerate(1.333):y(-110) end
-	}
-end
+t[#t+1] = Def.ActorFrame{
+	InitCommand=cmd(draworder,700);
+		LoadFont("Common Normal")..{
+		Text="© 2005-2009 Roxor Games";
+			InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-10;shadowlength,1;);
+			OnCommand=cmd(zoom,0.4);
+	};
+};
 
-return af
+return t
