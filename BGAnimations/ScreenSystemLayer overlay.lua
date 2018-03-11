@@ -2,7 +2,7 @@
 -- very minor modifications.
 
 local function CreditsText( pn )
-	return LoadFont("_miso") .. {
+	return LoadFont("_eurostile normal") .. {
 		InitCommand=function(self)
 			self:visible(false)
 			self:name("Credits" .. PlayerNumberToString(pn))
@@ -74,9 +74,9 @@ t[#t+1] = Def.ActorFrame {
 	}
 }
 
--- Wendy CreditText at lower-center of screen
-t[#t+1] = LoadFont("_wendy small")..{
-	InitCommand=cmd(xy, _screen.cx, _screen.h-16; zoom,0.5; horizalign,center ),
+-- CreditText at lower-center of screen
+t[#t+1] = LoadFont("titlemenu")..{
+	InitCommand=cmd(xy, _screen.cx, _screen.h-30; zoom,0.5; horizalign,center ),
 
 	OnCommand=function(self) self:playcommand("Refresh") end,
 	ScreenChangedMessageCommand=function(self) self:playcommand("Refresh") end,
@@ -86,7 +86,6 @@ t[#t+1] = LoadFont("_wendy small")..{
 	RefreshCommand=function(self)
 
 		local screen = SCREENMAN:GetTopScreen()
-
 		-- if this screen's Metric for ShowCreditDisplay=false, then hide this BitmapText actor
 		if screen then
 			self:visible( THEME:GetMetric( screen:GetName(), "ShowCreditDisplay" ) )

@@ -14,14 +14,14 @@ return Def.ActorFrame{
 		end
 	end,
 
-	LoadFont("_wendy small")..{
+	LoadFont("titlemenu")..{
 		Text=THEME:GetString("ScreenTitleJoin", "Press Start"),
 		InitCommand=cmd(xy,_screen.cx, _screen.h-80; shadowlength,1 ),
 		OnCommand=cmd(zoom,0.715),
 	},
 
-	LoadFont("_wendy small")..{
-		Text=THEME:GetString("ScreenSelectMusic","Start Button");
-		InitCommand=cmd(x,_screen.cx - 13; y,_screen.h - 126; zoom,1.1);
-	}
+	LoadActor( THEME:GetPathG("", "_common start button")).. {
+		InitCommand=cmd(xy,_screen.cx-5, _screen.h-80; shadowlength,1 ),
+		OnCommand=cmd(zoom,0.715),
+	},
 }
