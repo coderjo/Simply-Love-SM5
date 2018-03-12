@@ -1,7 +1,7 @@
 local t = Def.ActorFrame{
 
 	Def.Quad{
-		InitCommand=cmd(stretchto,SCREEN_LEFT,SCREEN_TOP,SCREEN_RIGHT,SCREEN_BOTTOM;diffuse,color("#FFFFFF");diffusealpha,0;sleep,0.1;accelerate,0.5;diffusealpha,1;sleep,0.2;decelerate,0.5;diffusealpha,0);
+		InitCommand=cmd(stretchto,SCREEN_LEFT,SCREEN_TOP,SCREEN_RIGHT,SCREEN_BOTTOM;diffuse,color("#FFFFFF");diffusealpha,0;sleep,0.1;accelerate,0.5;diffusealpha,1;sleep,0.1;decelerate,0.7;diffusealpha,0);
 	};
 
 	LoadActor("titlebg")..{
