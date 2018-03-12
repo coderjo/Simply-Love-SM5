@@ -48,6 +48,11 @@ local t = Def.ActorFrame{
 		OnCommand=cmd(zoomx,1;zoomy,0.80);
 	};
 
+	LoadActor(THEME:GetPathS("_Menu","music"))..{
+		OnCommand=cmd(play);
+		OffCommand=cmd(stop);
+	};
+
 };
 
 return t;

@@ -1,16 +1,22 @@
-return Def.ActorFrame{
-	Name="Header",
+-- return Def.ActorFrame{
+-- 	Name="Header",
 
-	Def.Quad{
-		InitCommand=cmd(zoomto, _screen.w, 32; vertalign, top; diffuse,0.65,0.65,0.65,1; x, _screen.cx),
-	},
+-- 	Def.Quad{
+-- 		InitCommand=cmd(zoomto, _screen.w, 32; vertalign, top; diffuse,0.65,0.65,0.65,1; x, _screen.cx),
+-- 	},
 
-	Def.BitmapText{
-		Name="HeaderText",
-		Font="_wendy small",
-		Text=ScreenString("HeaderText"),
-		InitCommand=cmd(diffusealpha,0; zoom,WideScale(0.5,0.6); horizalign, left; xy, 10, 15 ),
-		OnCommand=cmd(sleep, 0.1; decelerate,0.33; diffusealpha,1),
-		OffCommand=cmd(accelerate,0.33; diffusealpha,0)
-	}
-}
+-- 	Def.BitmapText{
+-- 		Name="HeaderText",
+-- 		Font="_wendy small",
+-- 		Text=ScreenString("HeaderText"),
+-- 		InitCommand=cmd(diffusealpha,0; zoom,WideScale(0.5,0.6); horizalign, left; xy, 10, 15 ),
+-- 		OnCommand=cmd(sleep, 0.1; decelerate,0.33; diffusealpha,1),
+-- 		OffCommand=cmd(accelerate,0.33; diffusealpha,0)
+-- 	}
+-- }
+
+
+return LoadActor("footer_gfx")..{
+	InitCommand=cmd(draworder,-5;CenterX;zoomx,1;zoomy,0.80);
+	--OnCommand=cmd();
+};
