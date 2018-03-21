@@ -81,6 +81,10 @@ local t = Def.ActorFrame{
 			GoOffCommand=cmd(sleep,.2;linear,0.3;diffusealpha,0;);
 		};
 	},
+	--Selection arrows
+	LoadActor(THEME:GetPathB("_shared","underlay arrows"))..{
+		InitCommand=cmd(x,184);
+	};
 }
 
 return t
