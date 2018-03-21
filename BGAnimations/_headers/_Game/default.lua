@@ -1,5 +1,7 @@
 return Def.ActorFrame{
 
-	LoadActor( ThemePrefs.Get("ThemeColor") )
+	LoadActor( "header_gfx" ) .. {
+		OnCommand=cmd(zoom,0.8; xy, -90, -15)
+	};
 
 };

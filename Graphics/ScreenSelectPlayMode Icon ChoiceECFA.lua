@@ -8,7 +8,7 @@ return Def.ActorFrame{
 		OffCommand=cmd(linear,0.3;diffusealpha,0);
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_LEFT+65;y,SCREEN_CENTER_Y-125 + 180;horizalign,left);
+		InitCommand=cmd(x,SCREEN_LEFT+65;y,SCREEN_CENTER_Y-135 + 180;horizalign,left);
 		LoadActor(THEME:GetPathG("_join","icons/hardcore_icon"))..{
 			GainFocusCommand=cmd(accelerate,0.1;diffuse,color("#FFFFFF");x,SCREEN_LEFT+65);
 			LoseFocusCommand=cmd(finishtweening;decelerate,0.1;diffuse,color("#636363");x,SCREEN_LEFT+46);
