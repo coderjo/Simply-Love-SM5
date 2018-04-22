@@ -1,5 +1,5 @@
 return Def.ActorFrame{
 
-	LoadActor( ThemePrefs.Get("ThemeColor") )
+	LoadActor( "ITG2" )
 
 };
