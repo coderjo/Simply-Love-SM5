@@ -88,11 +88,14 @@ local t = Def.ActorFrame {
 		-- begin commands
 		JudgmentSet:visible( true )
 		JudgmentSet:setstate( frame )
-
-		-- frame0 is like (-fantastic)
+		
+		-- frame0 is like (-fantastic) 
 		-- frame1 is like (fantastic-)
 		if frame == 0 or frame == 1 then
 			JudgmentSet:zoom(0.80)
+			if mods.JudgmentGraphic == "ITG2" or mods.JudgmentGraphic == "DDR A" or mods.JudgmentGraphic == "Code" then
+				JudgmentSet:glowshift():effectperiod(0.05):effectcolor1(color("1,1,1,0")):effectcolor2(color("1,1,1,0.5"));
+			end
 		else
 			JudgmentSet:zoom(0.85)
 		end
