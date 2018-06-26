@@ -91,9 +91,6 @@ local Overrides = {
 
 			if SL.Global.GameMode == "ECFA" then
 				for i=#all, 1, -1 do
-					if string.find(all[i], "`") == nil then
-						table.remove(all, i)
-					end
 					if GAMESTATE:GetCurrentStyle():GetStyleType() ~= "StyleType_OnePlayerTwoSides" then
 						if all[i] ~= nil then
 							if string.find(all[i], "couples") then
@@ -104,9 +101,6 @@ local Overrides = {
 				end
 			else
 				for i=#all, 1, -1 do
-					if string.find(all[i], "`") then
-						table.remove(all, i)
-					end
 					if GAMESTATE:GetCurrentStyle():GetStyleType() ~= "StyleType_OnePlayerTwoSides" then				
 						if all[i] ~= nil then
 							if string.find(all[i], "couples") then
