@@ -39,6 +39,19 @@ if not judgment_exists then
 	mods.JudgmentGraphic = files[1] or "None"
 end
 
+local judgementsToGlow = {"ITG2", "DDR A", "Love"}
+
+local function isGlowJudgment (judgment)
+
+	for i, j in ipairs(judgementsToGlow) do
+         if judgment == j then
+             return true
+         end
+	end
+     return false
+end
+
+
 
 -- - - - - - - - - - - - - - - - - - - - - -
 
@@ -93,7 +106,7 @@ local t = Def.ActorFrame {
 		-- frame1 is like (fantastic-)
 		if frame == 0 or frame == 1 then
 			JudgmentSet:zoom(0.80)
-			if mods.JudgmentGraphic == "ITG2" or mods.JudgmentGraphic == "DDR A" or mods.JudgmentGraphic == "Code" then
+			if isGlowJudgment(mods.JudgmentGraphic) then
 				JudgmentSet:glowshift():effectperiod(0.05):effectcolor1(color("1,1,1,0")):effectcolor2(color("1,1,1,0.7"));
 			end
 		else
