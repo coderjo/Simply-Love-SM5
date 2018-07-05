@@ -152,7 +152,7 @@ SL = {
 			TimingWindowSecondsMine=0.070000,
 			TimingWindowSecondsRoll=0.350000,
 		},
-		Competitive = {
+		Competitive = { -- IN THE GROOVE
 			TimingWindowAdd=ThemePrefs.Get("TimingWindowAdd"),
 			RegenComboAfterMiss=5,
 			MaxRegenComboAfterMiss=10,
@@ -168,7 +168,7 @@ SL = {
 			TimingWindowSecondsMine=0.070000,
 			TimingWindowSecondsRoll=0.350000,
 		},
-		ECFA = {
+		ECFA = { -- HARDCORE
 			TimingWindowAdd=ThemePrefs.Get("TimingWindowAdd"),
 			RegenComboAfterMiss=5,
 			MaxRegenComboAfterMiss=10,
@@ -184,7 +184,7 @@ SL = {
 			TimingWindowSecondsMine=0.070000,
 			TimingWindowSecondsRoll=0.350000,
 		},
-		StomperZ = {
+		StomperZ = { -- TOURNAMENT
 			TimingWindowAdd=ThemePrefs.Get("TimingWindowAdd"),
 			RegenComboAfterMiss=5,
 			MaxRegenComboAfterMiss=10,
@@ -233,7 +233,7 @@ SL = {
 			LifePercentChangeHeld=0,
 			LifePercentChangeHitMine=0,
 		},
-		Competitive = {
+		Competitive = { -- IN THE GROOVE
 			PercentScoreWeightW1=5,
 			PercentScoreWeightW2=4,
 			PercentScoreWeightW3=2,
@@ -264,26 +264,26 @@ SL = {
 			LifePercentChangeHeld=IsGame("pump") and 0.000 or 0.008,
 			LifePercentChangeHitMine=-0.050,
 		},
-		ECFA = {
-			PercentScoreWeightW1=4,
-			PercentScoreWeightW2=3,
+		ECFA = { -- HARDCORE
+			PercentScoreWeightW1=5,
+			PercentScoreWeightW2=4,
 			PercentScoreWeightW3=2,
 			PercentScoreWeightW4=1,
 			PercentScoreWeightW5=0,
 			PercentScoreWeightMiss=0,
 			PercentScoreWeightLetGo=0,
-			PercentScoreWeightHeld=4,
-			PercentScoreWeightHitMine=-4,
+			PercentScoreWeightHeld=5,
+			PercentScoreWeightHitMine=-5,
 
-			GradeWeightW1=4,
-			GradeWeightW2=3,
+			GradeWeightW1=5,
+			GradeWeightW2=4,
 			GradeWeightW3=2,
 			GradeWeightW4=1,
 			GradeWeightW5=0,
 			GradeWeightMiss=0,
 			GradeWeightLetGo=0,
-			GradeWeightHeld=4,
-			GradeWeightHitMine=-4,
+			GradeWeightHeld=5,
+			GradeWeightHitMine=-5,
 
 			LifePercentChangeW1=0.016,
 			LifePercentChangeW2=0.008,
@@ -295,7 +295,7 @@ SL = {
 			LifePercentChangeHeld=0.008,
 			LifePercentChangeHitMine=-0.05,
 		},
-		StomperZ = {
+		StomperZ = { -- TOURNAMENT
 			PercentScoreWeightW1=3,
 			PercentScoreWeightW2=2,
 			PercentScoreWeightW3=1,
