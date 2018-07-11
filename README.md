@@ -41,7 +41,7 @@ Or, *things I've added that were not present in the original Simply Love for Ste
 
 #### New GameModes
 
-* [Casual](http://i.imgur.com/zLLhDWQh.png) – Intended for novice players; no failing, no LifeMeter, simplified modifier menu, simplified evaluation screen, etc.
+* [Casual](http://i.imgur.com/zLLhDWQh.png) – Intended for novice players; restricted song list, no failing, no LifeMeter, simplified UI, etc.  You can read more about customizing what content appears in Casual Mode [here](./CasualMode-README.md).
 * [Competitive](http://i.imgur.com/HS03hhJh.png) – Play using the *In the Groove* standards established over a decade ago
 * [ECFA](http://i.imgur.com/teZtlbih.png) – Similar to Competitive, but features tighter TimingWindows; can be used to qualify for ECFA events
 * [StomperZ](http://i.imgur.com/dOKTpVbh.png) – Emulates a very small set of features from Rhythm Horizon gameplay
@@ -64,6 +64,15 @@ Or, *things I've added that were not present in the original Simply Love for Ste
   * [MenuTimer Options](http://imgur.com/DPffsdQh.png) – Set the MenuTimers for various screens.
   * [Long/Marathon Song Cutoffs](http://i.imgur.com/fzNJDVDh.png) – The cutoffs for songs that cost 2 and 3 rounds can be set in *Arcade Options*.
 
+#### Language Support
+
+Simply Love has full support for:
+
+  * English
+  * Español
+  * Français
+
+The current language can be changed in Simply Love under *System Options*.  You may need to restart StepMania immediately after changing the language for all in-game text to be properly translated.
 
 ## Missing Features
 Or, *things that were in the original Simply Love for StepMania 3.95 that are not present here.*
@@ -72,7 +81,7 @@ Or, *things that were in the original Simply Love for StepMania 3.95 that are no
   * timed sets
 
 
-<hr>
+---
 
 ## FAQ
 
@@ -84,10 +93,12 @@ Your existing scores will remain ranked out of order, but all scores going forwa
 #### Where is my Preferences.ini file?
 See the [Manually Changing Preferences](https://github.com/stepmania/stepmania/wiki/Manually-Changing-Preferences) page on StepMania's GitHub Wiki.
 
+#### How can I get more songs to show up in Casual Mode?
+Please refer to the [Casual Mode README](./CasualMode-README.md).
 
-<hr>
+---
 
-## ACKNOWLEDGEMENTS
+## Acknowledgements
 
 * [hurtpiggypig](http://www.shirtpiggypig.com/) -- Lara designed the original Simply Love theme for StepMania 3.95.
 * [djpohly](https://github.com/djpohly) -- djpohly was a constant source of knowledge and help during the months I spent porting this.

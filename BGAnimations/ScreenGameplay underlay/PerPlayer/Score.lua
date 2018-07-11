@@ -1,8 +1,6 @@
 local player = ...
 
-if SL[ ToEnumShortString(player) ].ActiveModifiers.HideScore then
-	return Def.Actor{}
-end
+if SL[ ToEnumShortString(player) ].ActiveModifiers.HideScore then return end
 
 local dance_points, percent
 local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
@@ -15,10 +13,27 @@ return Def.BitmapText{
 	InitCommand=function(self)
 		self:valign(1):halign(1)
 
-		self:zoom(0.4):x( WideScale(160, 214) ):y(20)
-		if player == PLAYER_2 then
-			self:x( _screen.w - WideScale(50, 114) )
+		-- figure out where the font should be placed
+		-- maximum width is for the text 100.00
+		local max_width = (5 * 48) + 20 - 4
+		-- respectively: all chars, decimal point,
+		-- compensation for 1 appearing narrower than a 0
+		-- 0 is 25
+		-- (since P1 has the 1 on the edge and P2 has the 0)
+
+		-- set y-position and scaling now
+		local scale = 0.4
+		self:y(20)
+		self:zoom(scale)
+
+		-- position the text just inwards of the difficulty meter with padding
+		local push = WideScale(27, 84) + 28
+
+		self:x(push + (max_width * scale))
+		if (player == PLAYER_2) then
+			self:x( _screen.w - push)
 		end
+
 	end,
 	JudgmentMessageCommand=function(self) self:queuecommand("RedrawScore") end,
 	RedrawScoreCommand=function(self)

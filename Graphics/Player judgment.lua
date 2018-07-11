@@ -3,9 +3,7 @@ local pn = ToEnumShortString(player)
 local mods = SL[pn].ActiveModifiers
 local kids, JudgmentSet
 
-if mods.JudgmentGraphic == "None" then
-	return Def.Actor{}
-end
+if mods.JudgmentGraphic == "None" then return end
 -- - - - - - - - - - - - - - - - - - - - - -
 
 -- a Judgment might be saved to a profile from a previous GameMode
@@ -55,15 +53,6 @@ end
 
 -- - - - - - - - - - - - - - - - - - - - - -
 
-local JudgeCmds = {
-	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1Command" ),
-	TapNoteScore_W2 = THEME:GetMetric( "Judgment", "JudgmentW2Command" ),
-	TapNoteScore_W3 = THEME:GetMetric( "Judgment", "JudgmentW3Command" ),
-	TapNoteScore_W4 = THEME:GetMetric( "Judgment", "JudgmentW4Command" ),
-	TapNoteScore_W5 = THEME:GetMetric( "Judgment", "JudgmentW5Command" ),
-	TapNoteScore_Miss = THEME:GetMetric( "Judgment", "JudgmentMissCommand" )
-}
-
 local TNSFrames = {
 	TapNoteScore_W1 = 0,
 	TapNoteScore_W2 = 1,
@@ -105,16 +94,13 @@ local t = Def.ActorFrame {
 		-- frame0 is like (-fantastic) 
 		-- frame1 is like (fantastic-)
 		if frame == 0 or frame == 1 then
-			JudgmentSet:zoom(0.80)
 			if isGlowJudgment(mods.JudgmentGraphic) then
 				JudgmentSet:glowshift():effectperiod(0.05):effectcolor1(color("1,1,1,0")):effectcolor2(color("1,1,1,0.7"));
 			end
-		else
-			JudgmentSet:zoom(0.85)
 		end
-
-		JudgmentSet:decelerate(0.1):zoom(0.75):sleep(1)
-		JudgmentSet:accelerate(0.2):zoom(0)
+		
+		-- this should match the custom JudgmentTween() from SL for 3.95
+		JudgmentSet:zoom(0.8):decelerate(0.1):zoom(0.75):sleep(0.6):accelerate(0.2):zoom(0)
 	end,
 
 	Def.Sprite{

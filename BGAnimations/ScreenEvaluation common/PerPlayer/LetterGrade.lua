@@ -8,7 +8,9 @@ if SL.Global.GameMode ~= "StomperZ" then
 	local title = GAMESTATE:GetCurrentSong():GetDisplayFullTitle()
 	if title == "D" then grade = "Grade_Tier99" end
 
-	return LoadActor(THEME:GetPathG("", "_grades/"..grade..".lua"), playerStats)..{
+	local t = Def.ActorFrame{}
+
+	t[#t+1] = LoadActor(THEME:GetPathG("", "_grades/"..grade..".lua"), playerStats)..{
 		InitCommand=cmd(xy, 70, _screen.cy-134),
 		OnCommand=function(self)
 			self:zoom(0.4)
@@ -17,4 +19,11 @@ if SL.Global.GameMode ~= "StomperZ" then
 			end
 		end
 	}
+
+	if ThemePrefs.Get("nice") then
+		t[#t+1] = LoadActor("nice.lua", pn)
+	end
+
+	return t
+
 end

@@ -4,7 +4,7 @@ return Def.ActorFrame{
 	InitCommand=function(self)
 		self:xy( WideScale(27,94), 56 )
 		if player == PLAYER_2 then
-			self:x( _screen.w-WideScale(27,94) )
+			self:x( _screen.w - self:GetX() )
 		end
 
 		self:y( 20 )
