@@ -1,4 +1,10 @@
 local t = Def.ActorFrame{
+	CodeMessageCommand=function(self, params)
+		if params.Name == "Exit" then
+			SCREENMAN:GetTopScreen():SetNextScreenName( Branch.SSMCancel() ):StartTransitioningScreen("SM_GoToNextScreen")
+		end
+		
+	end,
 	ChangeStepsMessageCommand=function(self, params)
 		self:playcommand("StepsHaveChanged", {Direction=params.Direction, Player=params.Player})
 	end,
