@@ -22,14 +22,14 @@ return Def.ActorFrame{
 	LoadFont("_wendy white")..{
 		Text=percent,
 		Name="Percent",
-		InitCommand=cmd(vertalign, middle; horizalign, right; zoom,0.585 ),
+		InitCommand=cmd(valign, 0.6; horizalign, right; zoom,0.585 ),
 		OnCommand=cmd(x, 70)
 	},
 
 	LoadFont("_wendy white")..{
 		Text="EX: ",
 		Name="PointsLabel",
-		InitCommand=cmd(valign, -6.7; horizalign, left; zoom,0.1 ),
+		InitCommand=cmd(valign, -3.4; horizalign, left; zoom,0.1 ),
 		OnCommand=function(self)
 			self:x(15)
 			self:diffusealpha( SL.Global.GameMode == "StomperZ" and 1 or 0 )
@@ -39,7 +39,7 @@ return Def.ActorFrame{
 		Font="_wendy white",
 		InitCommand=function(self)
 			self:diffusealpha( SL.Global.GameMode == "StomperZ" and 1 or 0 )
-			self:valign(-4)
+			self:valign(-2.1)
 			self:horizalign(right)
 			self:zoom(0.15)
 			self:x(67)
