@@ -488,22 +488,12 @@ if SL[pn].ActiveModifiers.TargetScore then
 
 			noteX = (width/NumColumns)
 
-				self:shadowlength(1) -- match other playfield counters
-			else
-				noteY = 56
-				noteX = GetNotefieldWidth() / 4
-				-- this serendipitiously works for doubles, somehow
-
-				-- ugly, ugly, U G L Y antisymmetry kludge
-				if (player ~= PLAYER_1 and isTwoPlayers) then
-					noteX = noteX + 25 -- this gets reversed...
-				end
-			end
+			self:shadowlength(1) -- match other playfield counters
 
 			-- flip x-coordinate based on player
-			if (player ~= PLAYER_1) then
-				noteX = -1 * noteX
-			end
+			-- if (player ~= PLAYER_1) then
+			-- 	noteX = -1 * noteX
+			-- end
 			noteX = noteX + origX
 
 			-- compensate so that we can use "normal" coordinate systems
