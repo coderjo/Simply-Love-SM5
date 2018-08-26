@@ -35,7 +35,7 @@ filter[#filter+1] = Def.Quad{
 		end
 
 		if (FlashColor ~= nil) then
-			self:accelerate(0.25):diffuse( FlashColor )
+			self:accelerate(0.25):diffuse( FlashColor ):diffusealpha(0.3)
 				:accelerate(0.5):faderight(1):fadeleft(1)
 				:accelerate(0.15):diffusealpha(0)
 		end
