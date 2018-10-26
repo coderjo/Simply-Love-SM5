@@ -186,7 +186,7 @@ function GetPlayerOptionsLineNames()
 end
 
 function GetPlayerOptions2LineNames()
-	local mods = "Turn,Scroll,7,8,9,10,11,12,13,Attacks,Hide,LifeMeterType,TargetStatus,TargetBar,GameplayExtras,MeasureCounterPosition,MeasureCounter,DecentsWayOffs,Vocalization,ScreenAfterPlayerOptions2"
+	local mods = "Turn,Scroll,7,8,9,10,11,12,13,Attacks,Hide,LifeMeterType,TargetStatus,TargetBar,ActionOnMissedTarget,GameplayExtras,MeasureCounterPosition,MeasureCounter,DecentsWayOffs,Vocalization,ScreenAfterPlayerOptions2"
 
 	-- remove DecentsWayOffs if GameMode is Tournament or Hardcore
 	if SL.Global.GameMode == "StomperZ" or SL.Global.GameMode == "ECFA" then
@@ -195,14 +195,53 @@ function GetPlayerOptions2LineNames()
 
 	-- remove TargetStatus and TargetBar (IIDX pacemaker) if style is double
 	if SL.Global.Gamestate.Style == "double" then
-		mods = mods:gsub("TargetStatus,TargetBar,", "")
+		mods = mods:gsub("TargetStatus,TargetBar,ActionOnMissedTarget,", "")
+	end
+
+	-- only show if the user is in event mode
+	-- no need to have this show up in arcades.
+	-- the pref is also checked against EventMode during runtime.
+	if not PREFSMAN:GetPreference("EventMode") then
+		mods = mods:gsub("ActionOnMissedTarget,", "")
 	end
 
 	return mods
 end
 
+GetStepsCredit = function(player)
+	local t = {}
+
+	if GAMESTATE:IsCourseMode() then
+		local course = GAMESTATE:GetCurrentCourse()
+		-- scripter
+		if course:GetScripter() ~= "" then t[#t+1] = course:GetScripter() end
+		-- description
+		if course:GetDescription() ~= "" then t[#t+1] = course:GetDescription() end
+	else
+		local steps = GAMESTATE:GetCurrentSteps(player)
+		-- credit
+		if steps:GetAuthorCredit() ~= "" then t[#t+1] = steps:GetAuthorCredit() end
+		-- description
+		if steps:GetDescription() ~= "" then t[#t+1] = steps:GetDescription() end
+		-- chart name
+		if steps:GetChartName() ~= "" then t[#t+1] = steps:GetChartName() end
+	end
+
+	return t
+end
+
 BrighterOptionRows = function()
 	if ThemePrefs.Get("RainbowMode") then return true end
 	if PREFSMAN:GetPreference("EasterEggs") and MonthOfYear()==11 then return true end -- holiday cheer
+	return false
+end
+
+GetThemeVersion = function()
+	local file = IniFile.ReadFile( THEME:GetCurrentThemeDirectory() .. "ThemeInfo.ini" )
+	if file then
+		if file.ThemeInfo and file.ThemeInfo.Version then
+			return file.ThemeInfo.Version
+		end
+	end
 	return false
 end

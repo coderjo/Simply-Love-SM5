@@ -13,6 +13,7 @@ end
 
 -- - - - - - - - - - - - - - - - - - - - -
 local sm_version = ""
+local sl_version = GetThemeVersion()
 
 if ProductVersion():find("git") then
 	local date = VersionDate()
@@ -34,6 +35,10 @@ local chillGrill = "ChillGrill (doubleres).png"
 local itgLogo = "InTheGroove (doubleres).png"
 local heatherCory = "HeatherCory (doubleres).png"
 
+if image == "Spooky" then  --SSHHHH dont tell anyone ;)
+	image = (math.random(1,100) > 11 and "Spooky" or "Spoopy")
+end
+
 local af = Def.ActorFrame{
 	InitCommand=function(self)
 		--see: ./Scripts/SL_Initialize.lua
@@ -49,7 +54,7 @@ local af = Def.ActorFrame{
 
 		Def.BitmapText{
 			Font="_miso",
-			Text=sm_version,
+			Text=sm_version .. (sl_version and ("       Simply Love v"..sl_version) or ""),
 			InitCommand=function(self) self:y(-20):diffuse(TextColor) end,
 		},
 		Def.BitmapText{
