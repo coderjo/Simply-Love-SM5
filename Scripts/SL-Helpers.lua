@@ -194,8 +194,8 @@ end
 function GetPlayerOptions2LineNames()
 	local mods = "Turn,Scroll,7,8,9,10,11,12,13,Attacks,Hide,LifeMeterType,TargetStatus,TargetBar,ActionOnMissedTarget,GameplayExtras,MeasureCounterPosition,MeasureCounter,DecentsWayOffs,Vocalization,ScreenAfterPlayerOptions2"
 
-	-- remove DecentsWayOffs if GameMode is Tournament or Hardcore
-	if SL.Global.GameMode == "StomperZ" or SL.Global.GameMode == "ECFA" then
+	-- remove DecentsWayOffs if GameMode is Tournament
+	if SL.Global.GameMode == "StomperZ" then
 		mods = mods:gsub("DecentsWayOffs,", "")
 	end
 
